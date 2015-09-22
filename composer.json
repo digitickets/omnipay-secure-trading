@@ -8,7 +8,8 @@
         "pay",
         "payment",
         "purchase",
-        "secure trading"
+        "secure trading",
+        "securetrading"
     ],
     "homepage": "https://github.com/meebio/omnipay-secure-trading",
     "license": "MIT",
