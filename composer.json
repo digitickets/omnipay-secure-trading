@@ -30,7 +30,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Omnipay\\SecureTrading\\": "src"
+            "Omnipay\\SecureTrading\\": "src",
+            "Gajus\\Strading\\": "securetrading"
         }
     },
     "autoload-dev": {

@@ -82,7 +82,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
         $alias = $data->addChild('alias', $this->getUsername());
 
         $request = $data->addChild('request');
-        $request->addAttribute('typy', $this->getAction());
+        $request->addAttribute('type', $this->getAction());
 
         $merchant = $request->addChild('merchant');
         $merchant->addChild('orderreference', $this->getTransactionId());
@@ -101,7 +101,8 @@ abstract class AbstractRequest extends BaseAbstractRequest
     public function sendData($data)
     {
         $headers      = array(
-            'Content-Type' => 'text/xml',
+            'Content-Type: text/xml;charset=utf-8',
+            'Accept: text/xml',
         );
         $httpRequest = $this->httpClient->post($this->getEndpoint(), $headers, $data->asXML());
         $httpRequest->setAuth($this->getUsername(), $this->getPassword());
@@ -124,8 +125,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
      */
     protected function createResponse($data)
     {
-        var_dump($data);
-        exit;
         return $this->response = new Response($this, $data);
     }
 }
