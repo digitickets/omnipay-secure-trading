@@ -1,0 +1,48 @@
+{
+    "name": "meebio/omnipay-secure-trading",
+    "description": "Secure Trading driver for the Omnipay PHP payment processing library",
+    "keywords": [
+        "gateway",
+        "merchant",
+        "omnipay",
+        "pay",
+        "payment",
+        "purchase",
+        "secure trading"
+    ],
+    "homepage": "https://github.com/meebio/omnipay-secure-trading",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "John Jablonski",
+            "email": "jablonski.kce@gmail.com",
+            "homepage": "http://jablonski.me",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "omnipay/common": "~2.0"
+    },
+    "require-dev": {
+        "omnipay/tests": "~2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnipay\\SecureTrading\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnipay\\SecureTrading\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
