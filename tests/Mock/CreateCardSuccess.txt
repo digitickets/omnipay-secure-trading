@@ -1,0 +1,33 @@
+HTTP/1.1 200 OK
+Content-Length: 780
+Content-Type: text/xml
+Date: Wed, 25 Jun 2014 10:55:48 GMT
+
+<?xml version="1.0" encoding="utf-8"?>
+<responseblock version="3.67">
+    <requestreference>X7jnqt21m</requestreference>
+    <response type="STORE">
+        <merchant>
+            <merchantname>example UNICODE merchantname</merchantname>
+            <orderreference>testing_123</orderreference>
+        </merchant>
+        <transactionreference>33-52-9</transactionreference>
+        <billing>
+            <payment type="VISA">
+                <active>1</active>
+                <issuercountry>US</issuercountry>
+                <pan>411111######1111</pan>
+                <issuer>SecureTrading Test Issuer1</issuer>
+            </payment>
+        </billing>
+        <timestamp>2015-07-24 13:00:10</timestamp>
+        <live>0</live>
+        <error>
+            <message>Ok</message>
+            <code>0</code>
+        </error>
+        <operation>
+            <accounttypedescription>CARDSTORE</accounttypedescription>
+        </operation>
+    </response>
+</responseblock>

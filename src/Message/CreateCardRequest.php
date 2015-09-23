@@ -7,18 +7,18 @@ use Omnipay\Common\Exception\InvalidRequestException;
 use SimpleXMLElement;
 
 /**
- * Authorize Request
+ * CreateCard Request
  *
  * @method Response send()
  */
-class AuthorizeRequest extends AbstractRequest
+class CreateCardRequest extends AbstractRequest
 {
     /**
      * @return string
      */
     public function getAction()
     {
-        return 'AUTH';
+        return 'STORE';
     }
 
     /**
@@ -28,38 +28,29 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->validate('amount');
+        $this->validate('card');
+        $card = $this->getCard();
+        $card->validate();
 
         $data = $this->getBaseData();
 
         /** @var SimpleXmlElement $request */
         $request = $data->request;
+        /** @var SimpleXmlElement $operation */
+        $operation = $request->operation;
+        $operation->accounttypedescription = 'CARDSTORE';
 
         $billing = $request->addChild('billing');
-
-        $amount = $billing->addChild('amount', $this->getAmountInteger());
-        $amount->addAttribute('currencycode', $this->getCurrency());
-
-        $card = $this->getCard();
 
         $name = $billing->addChild('name');
         $name->addChild('last', $card->getLastName());
         $name->addChild('first', $card->getFirstName());
 
-        if (!is_null($this->getCardReference())) {
-            /** @var SimpleXMLElement $operation */
-            $operation = $request->operation;
-            $operation->addChild('parenttransactionreference', $this->getCardReference());
-        } else {
-            $payment = $billing->addChild('payment');
-            $payment->addAttribute('type', strtoupper($card->getBrand()));
+        $payment = $billing->addChild('payment');
+        $payment->addAttribute('type', strtoupper($card->getBrand()));
 
-            $payment->addChild('pan', $card->getNumber());
-            $payment->addChild('expirydate', $card->getExpiryDate('m/Y'));
-            $payment->addChild('securitycode', $card->getCvv());
-        }
-
-
+        $payment->addChild('pan', $card->getNumber());
+        $payment->addChild('expirydate', $card->getExpiryDate('m/Y'));
 
         return $data;
     }
