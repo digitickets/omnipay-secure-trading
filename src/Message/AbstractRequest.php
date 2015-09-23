@@ -89,7 +89,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
 
         $operation = $request->addChild('operation');
         $operation->addChild('sitereference', $this->getSiteReference());
-        $operation->addChild('accounttypedescription', 'ECOM');
 
         return $data;
     }

@@ -82,29 +82,20 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return Message\AuthorizeRequest
+     * @return Message\PurchaseRequest
      */
-    public function authorize(array $parameters = array())
+    public function purchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\SecureTrading\Message\AuthorizeRequest', $parameters);
-    }
-
-    /**
-     * @param array $parameters
-     * @return Message\CaptureRequest
-     */
-    public function capture(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SecureTrading\Message\CaptureRequest', $parameters);
+        return $this->createRequest('\Omnipay\SecureTrading\Message\PurchaseRequest', $parameters);
     }
 
     /**
      * @param array $parameters
      * @return Message\PurchaseRequest
      */
-    public function purchase(array $parameters = array())
+    public function completePurchase(array $parameters = array())
     {
-        return $this->createRequest('\Omnipay\SecureTrading\Message\PurchaseRequest', $parameters);
+        return $this->createRequest('\Omnipay\SecureTrading\Message\CompletePurchaseRequest', $parameters);
     }
 
     /**
@@ -123,5 +114,14 @@ class Gateway extends AbstractGateway
     public function refund(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\SecureTrading\Message\RefundRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return Message\VoidRequest
+     */
+    public function createCard(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\SecureTrading\Message\CreateCardRequest', $parameters);
     }
 }
