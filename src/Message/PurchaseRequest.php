@@ -34,6 +34,7 @@ class PurchaseRequest extends AbstractRequest
 
         /** @var SimpleXmlElement $request */
         $request = $data->request;
+
         /** @var SimpleXmlElement $operation */
         $operation = $request->operation;
         $operation->addChild('accounttypedescription', 'ECOM');

@@ -14,24 +14,7 @@ class Response extends AbstractResponse
      */
     public function isSuccessful()
     {
-        return isset($this->data->response->error->code) && ((string)$this->data->response->error->code) === '0';
-    }
-
-    /**
-     * @return bool
-     */
-    public function isRedirect()
-    {
-        return false;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getTransactionReference()
-    {
-        return isset($this->data->response->transactionreference) ?
-            (string)$this->data->response->transactionreference : null;
+        return $this->getCode() === 0 && $this->getSettleStatus() !== 3;
     }
 
     /**
@@ -51,10 +34,53 @@ class Response extends AbstractResponse
     }
 
     /**
+     * @return null|int
+     */
+    public function getErrorData()
+    {
+        return isset($this->data->response->error->data) ? (string)$this->data->response->error->data : null;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRedirect()
+    {
+        return false;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getTransactionReference()
+    {
+        return isset($this->data->response->transactionreference)
+            ? (string)$this->data->response->transactionreference : null;
+    }
+
+    /**
      * @return null|string
      */
     public function getCardReference()
     {
-        return $this->getCardReference();
+        return $this->getTransactionReference();
+    }
+
+    /**
+     * @return null|int
+     */
+    public function getSettleStatus()
+    {
+        return isset($this->data->response->settlement->settlestatus)
+            ? (int)$this->data->response->settlement->settlestatus : null;
+    }
+
+    /**
+     * @return null|string date format: "Y-m-d"
+     */
+    public function getSettleDate()
+    {
+        return isset($this->data->response->settlement->settlestatus)
+            ? (string)$this->data->response->settlement->settlestatus : null;
     }
 }
