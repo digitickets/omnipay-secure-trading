@@ -100,15 +100,6 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return Message\VoidRequest
-     */
-    public function void(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SecureTrading\Message\VoidRequest', $parameters);
-    }
-
-    /**
-     * @param array $parameters
      * @return Message\RefundRequest
      */
     public function refund(array $parameters = array())
@@ -118,7 +109,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return Message\VoidRequest
+     * @return Message\CreateCardRequest
      */
     public function createCard(array $parameters = array())
     {
