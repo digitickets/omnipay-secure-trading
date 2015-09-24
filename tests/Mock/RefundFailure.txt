@@ -1,0 +1,19 @@
+HTTP/1.1 200 OK
+Date: Thu, 24 Sep 2015 06:52:21 GMT
+Server: webservices gateway 3 mod_fcgid/2.3.6
+Content-Length: 385
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<responseblock version="3.67">
+  <requestreference>W3-umbf5bv2</requestreference>
+  <response type="ERROR">
+    <timestamp>2015-09-24 06:52:21</timestamp>
+    <transactionreference>3-9-2205015</transactionreference>
+    <error>
+      <message>Refund amount too great</message>
+      <code>20007</code>
+    </error>
+  </response>
+</responseblock>

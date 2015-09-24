@@ -1,0 +1,20 @@
+HTTP/1.1 200 OK
+Date: Thu, 24 Sep 2015 06:47:51 GMT
+Server: webservices gateway 4 mod_fcgid/2.3.6
+Content-Length: 407
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<responseblock version="3.67">
+  <requestreference>W4-1xe1vetj</requestreference>
+  <response type="ERROR">
+    <timestamp>2015-09-24 06:47:51</timestamp>
+    <transactionreference>4-9-2324005</transactionreference>
+    <error>
+      <message>Invalid field</message>
+      <code>30000</code>
+      <data>securitycode</data>
+    </error>
+  </response>
+</responseblock>

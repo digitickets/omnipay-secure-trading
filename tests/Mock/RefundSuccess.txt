@@ -1,0 +1,51 @@
+HTTP/1.1 200 OK
+Date: Thu, 24 Sep 2015 06:42:39 GMT
+Server: webservices gateway 6 mod_fcgid/2.3.6
+Content-Length: 1419
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<responseblock version="3.67">
+  <requestreference>W6-k7ghjbr0</requestreference>
+  <response type="REFUND">
+    <merchant>
+      <merchantname>VoucherCart</merchantname>
+      <orderreference>test-1234</orderreference>
+      <tid>27882788</tid>
+      <merchantnumber>00000000</merchantnumber>
+      <merchantcountryiso2a>GB</merchantcountryiso2a>
+    </merchant>
+    <transactionreference>6-9-1922867</transactionreference>
+    <billing>
+      <amount currencycode="GBP">66</amount>
+      <payment type="VISA">
+        <issuercountry>US</issuercountry>
+        <pan>411111######0211</pan>
+        <issuer>SecureTrading Test Issuer1</issuer>
+      </payment>
+      <dcc enabled="0"/>
+    </billing>
+    <timestamp>2015-09-24 06:42:39</timestamp>
+    <settlement>
+      <settleduedate>2015-09-24</settleduedate>
+      <settlestatus>0</settlestatus>
+    </settlement>
+    <live>0</live>
+    <error>
+      <message>Ok</message>
+      <code>0</code>
+    </error>
+    <authcode>TEST REFUND ACCEPTED</authcode>
+    <acquirerresponsecode>00</acquirerresponsecode>
+    <operation>
+      <parenttransactionreference>6-9-1922866</parenttransactionreference>
+      <accounttypedescription>ECOM</accounttypedescription>
+    </operation>
+    <security>
+      <address>1</address>
+      <postcode>0</postcode>
+      <securitycode>0</securitycode>
+    </security>
+  </response>
+</responseblock>

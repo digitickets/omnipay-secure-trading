@@ -1,0 +1,18 @@
+HTTP/1.1 200 OK
+Date: Thu, 24 Sep 2015 06:56:21 GMT
+Server: webservices gateway 1 mod_fcgid/2.3.6
+Content-Length: 315
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<responseblock version="3.67">
+  <requestreference>W1-n5x6qavc</requestreference>
+  <response type="ERROR">
+    <timestamp>2015-09-24 06:56:21</timestamp>
+    <error>
+      <message>Missing parent</message>
+      <code>20004</code>
+    </error>
+  </response>
+</responseblock>
