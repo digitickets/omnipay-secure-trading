@@ -101,7 +101,10 @@ class GatewayTest extends GatewayTestCase
     public function testPurchaseCardReferenceFailure()
     {
         $this->setMockHttpResponse('PurchaseCardReferenceFailure.txt');
-        $response = $this->gateway->purchase($this->options)->send();
+        $response = $this->gateway->purchase(array_merge($this->options, array(
+            'card'          => null,
+            'cardReference' => '6-9-1918130X',
+        )))->send();
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
@@ -112,6 +115,53 @@ class GatewayTest extends GatewayTestCase
         $this->assertNull($response->getCardReference());
         $this->assertNull($response->getSettleStatus());
         $this->assertNull($response->getSettleDueDate());
+    }
+
+    public function testCompletePurchaseSuccess()
+    {
+        $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
+        $response = $this->gateway->completePurchase(array(
+            'md'    => 'dummy',
+            'paRes' => 'dummy',
+        ))->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('Ok', $response->getMessage());
+        $this->assertSame(0, $response->getCode());
+        $this->assertNull($response->getErrorData());
+        $this->assertSame('4-9-2324407', $response->getTransactionReference());
+        $this->assertSame('4-9-2324407', $response->getCardReference());
+        $this->assertSame(0, $response->getSettleStatus());
+        $this->assertSame('2015-09-24', $response->getSettleDueDate());
+
+        $this->assertSame('Q0FWVkNBVlZDQVZWQ0FWVkNBVlY=', (string)$response->getData()->response->threedsecure->cavv);
+        $this->assertSame('Y', (string)$response->getData()->response->threedsecure->status);
+        $this->assertSame('dHFncHQ1WUltcGhKS1NCUmFGUUo=', (string)$response->getData()->response->threedsecure->xid);
+        $this->assertSame('05', (string)$response->getData()->response->threedsecure->eci);
+        $this->assertSame('Y', (string)$response->getData()->response->threedsecure->enrolled);
+    }
+
+    public function testCompletePurchaseFailure()
+    {
+        $this->setMockHttpResponse('CompletePurchaseFailure.txt');
+        $response = $this->gateway->completePurchase(array(
+            'md'    => 'dummy',
+            'paRes' => 'dummy',
+        ))->send();
+
+        $this->assertFalse($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('Unauthenticated', $response->getMessage());
+        $this->assertSame(60022, $response->getCode());
+        $this->assertNull($response->getErrorData());
+        $this->assertSame('7-9-1794888', $response->getTransactionReference());
+        $this->assertSame('7-9-1794888', $response->getCardReference());
+        $this->assertSame(3, $response->getSettleStatus());
+        $this->assertSame('2015-09-24', $response->getSettleDueDate());
+
+        $this->assertSame('N', (string)$response->getData()->response->threedsecure->status);
+        $this->assertSame('Y', (string)$response->getData()->response->threedsecure->enrolled);
     }
 
     public function testRefundSuccess()
@@ -154,7 +204,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('ThreeDSecureEnrolled.txt');
         $response = $this->gateway->threeDSecure(array_merge($this->options, array(
-            'returnUrl' => 'http://dummy.return/url'
+            'returnUrl' => 'http://dummy.return/url',
         )))->send();
 
         $this->assertTrue($response->isSuccessful());
@@ -186,9 +236,9 @@ class GatewayTest extends GatewayTestCase
             'OKFfMenCUw==', $response->getPaReq());
         $this->assertSame('https://webapp.securetrading.net/acs/visa.cgi', $response->getRedirectUrl());
         $this->assertSame(array(
-            'PaReq' => $response->getPaReq(),
+            'PaReq'   => $response->getPaReq(),
             'TermUrl' => $response->getRequest()->getReturnUrl(),
-            'MD' => $response->getMd(),
+            'MD'      => $response->getMd(),
         ), $response->getRedirectData());
     }
 
@@ -196,7 +246,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('ThreeDSecureNotEnrolled.txt');
         $response = $this->gateway->threeDSecure(array_merge($this->options, array(
-            'returnUrl' => 'http://dummy.return/url'
+            'returnUrl' => 'http://dummy.return/url',
         )))->send();
 
         $this->assertTrue($response->isSuccessful());

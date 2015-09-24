@@ -1,0 +1,49 @@
+HTTP/1.1 200 OK
+Date: Thu, 24 Sep 2015 13:17:12 GMT
+Server: webservices gateway 7 mod_fcgid/2.3.6
+Content-Length: 1351
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<responseblock version="3.67">
+  <requestreference>W7-xn30tu3d</requestreference>
+  <response type="AUTH">
+    <merchant>
+      <merchantname>DummyMercha</merchantname>
+      <orderreference>test-1234</orderreference>
+      <tid>27882788</tid>
+      <merchantnumber>00000000</merchantnumber>
+      <merchantcountryiso2a>GB</merchantcountryiso2a>
+    </merchant>
+    <transactionreference>7-9-1794888</transactionreference>
+    <timestamp>2015-09-24 13:17:12</timestamp>
+    <operation>
+      <splitfinalnumber>1</splitfinalnumber>
+      <parenttransactionreference>6-9-1923517</parenttransactionreference>
+      <accounttypedescription>ECOM</accounttypedescription>
+    </operation>
+    <settlement>
+      <settleduedate>2015-09-24</settleduedate>
+      <settlestatus>3</settlestatus>
+    </settlement>
+    <billing>
+      <amount currencycode="GBP">110</amount>
+      <payment type="VISA">
+        <issuer>SecureTrading Test Issuer1</issuer>
+        <pan>411111######1111</pan>
+        <issuercountry>US</issuercountry>
+      </payment>
+      <dcc enabled="0"/>
+    </billing>
+    <threedsecure>
+      <status>N</status>
+      <enrolled>Y</enrolled>
+    </threedsecure>
+    <live>0</live>
+    <error>
+      <message>Unauthenticated</message>
+      <code>60022</code>
+    </error>
+  </response>
+</responseblock>
