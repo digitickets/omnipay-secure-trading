@@ -10,7 +10,7 @@ Content-Type: text/xml
   <requestreference>W6-k7ghjbr0</requestreference>
   <response type="REFUND">
     <merchant>
-      <merchantname>VoucherCart</merchantname>
+      <merchantname>DummyMercha</merchantname>
       <orderreference>test-1234</orderreference>
       <tid>27882788</tid>
       <merchantnumber>00000000</merchantnumber>
@@ -21,7 +21,7 @@ Content-Type: text/xml
       <amount currencycode="GBP">66</amount>
       <payment type="VISA">
         <issuercountry>US</issuercountry>
-        <pan>411111######0211</pan>
+        <pan>411111######1111</pan>
         <issuer>SecureTrading Test Issuer1</issuer>
       </payment>
       <dcc enabled="0"/>

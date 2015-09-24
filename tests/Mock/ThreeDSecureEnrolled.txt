@@ -1,0 +1,50 @@
+HTTP/1.1 200 OK
+Date: Thu, 24 Sep 2015 09:14:54 GMT
+Server: webservices gateway 7 mod_fcgid/2.3.6
+Content-Length: 2268
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<responseblock version="3.67">
+  <requestreference>W7-hm2jbrrg</requestreference>
+  <response type="THREEDQUERY">
+    <merchant>
+      <merchantname>DummyMercha</merchantname>
+      <orderreference>test-1234</orderreference>
+      <tid>27882788</tid>
+      <merchantnumber>00000000</merchantnumber>
+      <merchantcountryiso2a>GB</merchantcountryiso2a>
+    </merchant>
+    <transactionreference>7-9-1794658</transactionreference>
+    <billing>
+      <payment type="VISA">
+        <issuercountry>US</issuercountry>
+        <pan>411111######1111</pan>
+        <issuer>SecureTrading Test Issuer1</issuer>
+      </payment>
+      <dcc enabled="0"/>
+    </billing>
+    <timestamp>2015-09-24 09:14:54</timestamp>
+    <threedsecure>
+      <acsurl>https://webapp.securetrading.net/acs/visa.cgi</acsurl>
+      <md>UEZOVVBqeE5SRDQ4VFVSSVBuaHhURXBpT1M4d1ZHeEhSR052T1VobFQzSTNUMUU5UFR3dlRVUklQanhoWTNOVmNtdythSFIwY0hNNkx5OTNaV0poY0hBdWMyVmpkWEpsZEhKaFpHbHVaeTV1WlhRdllXTnpMM1pwYzJFdVkyZHBQQzloWTNOVmNtdytQSEJoYmt4bGJtZDBhRDR4Tmp3dmNHRnVUR1Z1WjNSb1BqeHRaWE56WVdkbFNXUStVRUZTWlhFdE1UUTBNekE0TmpBNU5EWTJNQzB0TWpBeU1qSTNOVFl3Tmp3dmJXVnpjMkZuWlVsa1Bqd3ZUVVErUEM5VFZEND06bWRjU2NVNFlRamFIOUppUFhwNDZ3S1Z1QktQVkt1eHd6TzZsYUZvWHZILzk2OUNnVU5GQ2tMVXJBUGZQcVh4VUls</md>
+      <xid>RWFrVW9lSkZYYytadUVFRkFYWXg=</xid>
+      <pareq>eJxVUk1vwjAM/SuIe0ka2o4ik4mB0DhsmmCDsVtILVpBP0hTVP79ktKO4ZOf4zzbz4bPWCHO1ygrhRzesCzFAXtJNOl/TFd4dlzPG9JRQEMvCKjjMMoYe/IDGvQ5NBkcLqjKJM+4O6ADBqSDhkzJWGSag5Dnl+U7d9nQ8wMgLYQU1XLO6aMBuYUhEynyTV7JGNVMKA2kiYDMq0yrKx8xQ9UBqNSJx1oXY0KKuNjn9SDCi6HCfZI7eZolhbg6ZTOmo5WIkuxAsBZpccKB+fAspDZNT4YREEsF5N79R2W90pSuk4ivtgu12Yan9fFnt7tqEX1tFqvjYrf9PkyA2AyIhEbOqOvTkHk9Go5db+x7QJo4iNT2zMOREeLmQmErTO/x/xhMywoz2Q3cIcC6yDM0GUbzPx8iLCXXWGrHqm1qWgzkPsPs1e5DaiOx51prdWeuazfTPFjuxKhqZriRWwDEfiXt0kl7KsZ7OKFfMenCUw==</pareq>
+      <enrolled>Y</enrolled>
+    </threedsecure>
+    <live>0</live>
+    <error>
+      <message>Ok</message>
+      <code>0</code>
+    </error>
+    <operation>
+      <authmethod>FINAL</authmethod>
+      <accounttypedescription>ECOM</accounttypedescription>
+    </operation>
+    <settlement>
+      <settleduedate>2015-09-24</settleduedate>
+      <settlestatus>0</settlestatus>
+    </settlement>
+  </response>
+</responseblock>
