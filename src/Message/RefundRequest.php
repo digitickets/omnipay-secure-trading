@@ -4,6 +4,11 @@ namespace Omnipay\SecureTrading\Message;
 
 use SimpleXMLElement;
 
+/**
+ * Refund Request
+ *
+ * @method Response send()
+ */
 class RefundRequest extends AbstractRequest
 {
     /**

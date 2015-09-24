@@ -78,9 +78,9 @@ class Response extends AbstractResponse
     /**
      * @return null|string date format: "Y-m-d"
      */
-    public function getSettleDate()
+    public function getSettleDueDate()
     {
-        return isset($this->data->response->settlement->settlestatus)
-            ? (string)$this->data->response->settlement->settlestatus : null;
+        return isset($this->data->response->settlement->settleduedate)
+            ? (string)$this->data->response->settlement->settleduedate : null;
     }
 }

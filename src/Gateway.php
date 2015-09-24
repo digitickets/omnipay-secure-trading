@@ -89,14 +89,14 @@ class Gateway extends AbstractGateway
         return $this->createRequest('\Omnipay\SecureTrading\Message\PurchaseRequest', $parameters);
     }
 
-    /**
-     * @param array $parameters
-     * @return Message\PurchaseRequest
-     */
-    public function completePurchase(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SecureTrading\Message\CompletePurchaseRequest', $parameters);
-    }
+//    /**
+//     * @param array $parameters
+//     * @return Message\PurchaseRequest
+//     */
+//    public function completePurchase(array $parameters = array())
+//    {
+//        return $this->createRequest('\Omnipay\SecureTrading\Message\CompletePurchaseRequest', $parameters);
+//    }
 
     /**
      * @param array $parameters
