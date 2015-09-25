@@ -136,7 +136,6 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
         $name = $billing->addChild('name');
         $name->addChild('first', $card->getBillingFirstName());
         $name->addChild('last', $card->getBillingLastName());
-        $name->addChild('prefix', $card->getBillingTitle());
 
         $billing->addChild('country', $card->getBillingCountry());
         $billing->addChild('county', $card->getBillingState());
@@ -169,7 +168,6 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
         $name = $customer->addChild('name');
         $name->addChild('first', $card->getShippingFirstName());
         $name->addChild('last', $card->getShippingLastName());
-        $name->addChild('prefix', $card->getShippingTitle());
 
         $customer->addChild('country', $card->getShippingCountry());
         $customer->addChild('county', $card->getShippingState());
