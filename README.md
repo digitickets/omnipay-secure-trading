@@ -37,7 +37,7 @@ This driver supports following transaction types:
 
 Gateway instantiation:
 
-    $gateway = Omnipay::create('Secure_Trading');
+    $gateway = Omnipay::create('SecureTrading');
     $gateway->setSiteReference('siteReference123');
     $gateway->setUsername('username123');
     $gateway->setPassword('password123');
@@ -53,7 +53,7 @@ Driver also supports paying with `cardReference` instead of `card`.
 ### 3D Secure
 To enable 3D Secure credit card authorization through `purchase` request, `applyThreeDSecure` parameter needs to be set to true. Then whole purchase flow is like below:
 
-    $gateway = Omnipay::create('Secure_Trading');
+    $gateway = Omnipay::create('SecureTrading');
     $gateway->setSiteReference('siteReference123');
     $gateway->setUsername('username123');
     $gateway->setPassword('password123');
@@ -88,7 +88,7 @@ To enable 3D Secure credit card authorization through `purchase` request, `apply
     
 In case of redirection, following code is needed to process payment after customer returns from remote server:
     
-    $gateway = Omnipay::create('Secure_Trading');
+    $gateway = Omnipay::create('SecureTrading');
     $gateway->setSiteReference('siteReference123');
     $gateway->setUsername('username123');
     $gateway->setPassword('password123');
