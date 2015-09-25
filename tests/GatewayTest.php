@@ -170,7 +170,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse(array(
             'PurchaseWithThreeDSecureNotEnrolled.txt',
-            'PurchaseSuccessWithThreeDSecureNotEnrolled.txt'
+            'PurchaseSuccessWithThreeDSecureNotEnrolled.txt',
         ));
         $response = $this->gateway->purchase(array_merge($this->options, array(
             'returnUrl'         => 'http://dummy.return/url',
