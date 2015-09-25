@@ -1,0 +1,55 @@
+HTTP/1.1 200 OK
+Date: Fri, 25 Sep 2015 12:57:00 GMT
+Server: webservices gateway 7 mod_fcgid/2.3.6
+Content-Length: 1503
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<responseblock version="3.67">
+  <requestreference>W7-qrumrn02</requestreference>
+  <response type="AUTH">
+    <merchant>
+      <merchantname>DummyMercha</merchantname>
+      <orderreference>test-1234</orderreference>
+      <tid>27882788</tid>
+      <merchantnumber>00000000</merchantnumber>
+      <merchantcountryiso2a>GB</merchantcountryiso2a>
+    </merchant>
+    <transactionreference>7-9-1796835</transactionreference>
+    <timestamp>2015-09-25 12:57:00</timestamp>
+    <acquirerresponsecode>00</acquirerresponsecode>
+    <operation>
+      <splitfinalnumber>1</splitfinalnumber>
+      <parenttransactionreference>7-9-1796834</parenttransactionreference>
+      <accounttypedescription>ECOM</accounttypedescription>
+    </operation>
+    <settlement>
+      <settleduedate>2015-09-25</settleduedate>
+      <settlestatus>0</settlestatus>
+    </settlement>
+    <billing>
+      <amount currencycode="GBP">111</amount>
+      <payment type="VISA">
+        <issuer>TestIssuer 5</issuer>
+        <pan>411111######1111</pan>
+        <issuercountry>US</issuercountry>
+      </payment>
+      <dcc enabled="0"/>
+    </billing>
+    <authcode>TEST26</authcode>
+    <threedsecure>
+      <enrolled>N</enrolled>
+    </threedsecure>
+    <live>0</live>
+    <error>
+      <message>Ok</message>
+      <code>0</code>
+    </error>
+    <security>
+      <postcode>0</postcode>
+      <securitycode>2</securitycode>
+      <address>0</address>
+    </security>
+  </response>
+</responseblock>

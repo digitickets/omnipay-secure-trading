@@ -63,7 +63,16 @@ class PurchaseRequest extends AbstractPurchaseRequest
     protected function createResponse($data)
     {
         if ($this->getApplyThreeDSecure()) {
-            return $this->response = new ThreeDSecureResponse($this, $data);
+            $response = new ThreeDSecureResponse($this, $data);
+
+            if (!$response->isSuccessful() || $response->isRedirect()) {
+                return $response;
+            } else {
+                $this->setApplyThreeDSecure(false);
+                $this->setCard(null);
+                $this->setCardReference($response->getTransactionReference());
+                return $this->send();
+            }
         } else {
             return parent::createResponse($data);
         }

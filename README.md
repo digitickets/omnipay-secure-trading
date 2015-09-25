@@ -49,6 +49,63 @@ Driver also supports paying with `cardReference` instead of `card`.
         'amount'        => '10.00',
         'cardReference' => 'abc',
     ]);
+    
+### 3D Secure
+To enable 3D Secure credit card authorization through `purchase` request, `applyThreeDSecure` parameter needs to be set to true. Then whole purchase flow is like below:
+
+    $gateway = Omnipay::create('Secure_Trading');
+    $gateway->setSiteReference('siteReference123');
+    $gateway->setUsername('username123');
+    $gateway->setPassword('password123');
+    
+    $request = $gatewat->purchase([
+        'transactionId'     => 'test-1234',
+        'applyThreeDSecure' => true,
+        'returnUrl'         => 'http://test-website.test/return-url',
+        'amount'            => '2.99',
+        'currency'          => 'GBP',
+        'card'              => [
+            'number'      => '4111111111111111',
+            'expiryMonth' => '12',
+            'expiryYear'  => '2020',
+            'cvv'         => '123',
+            'firstName'   => 'Forename',
+            'lastName'    => 'Surname',
+        ],
+    ]);
+    
+    $response = $request->send();
+    if ($response->isSuccessful()) {
+        // card not enrolled or unknown enrollment
+        // and payment is successful, no redirection needed
+    } elseif ($response->isRedirect()) {
+        // redirect to offsite payment gateway
+        $response->redirect();
+    } else {
+        // payment failed: display message to customer
+        echo $response->getMessage();
+    }
+    
+In case of redirection, following code is needed to process payment after customer returns from remote server:
+    
+    $gateway = Omnipay::create('Secure_Trading');
+    $gateway->setSiteReference('siteReference123');
+    $gateway->setUsername('username123');
+    $gateway->setPassword('password123');
+        
+    $request = $gateway->completePurchase([
+        'md'    => $_POST['MD'],
+        'paRes' => $_POST['PaRes'],
+    ]);
+    
+    $response = $request->send();
+    if ($response->isSuccessful()) {
+        // payment is successful
+    } else {
+        // payment failed: display message to customer
+        echo $response->getMessage();
+    }
+
 
 ## Support
 

@@ -12,6 +12,14 @@ use Omnipay\Common\Message\RedirectResponseInterface;
 class ThreeDSecureResponse extends Response implements RedirectResponseInterface
 {
     /**
+     * @return bool
+     */
+    public function isSuccessful()
+    {
+        return parent::isSuccessful() && !$this->isRedirect();
+    }
+
+    /**
      * @return null|string
      */
     public function getEnrolled()
@@ -60,7 +68,7 @@ class ThreeDSecureResponse extends Response implements RedirectResponseInterface
      */
     public function isRedirect()
     {
-        return $this->isEnrolled();
+        return parent::isSuccessful() && $this->isEnrolled();
     }
 
     /**

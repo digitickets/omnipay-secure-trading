@@ -126,7 +126,7 @@ class GatewayTest extends GatewayTestCase
             'applyThreeDSecure' => true,
         )))->send();
 
-        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertSame('Ok', $response->getMessage());
         $this->assertSame(0, $response->getCode());
@@ -168,7 +168,10 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchaseWithThreeDSecureNotEnrolled()
     {
-        $this->setMockHttpResponse('PurchaseWithThreeDSecureNotEnrolled.txt');
+        $this->setMockHttpResponse(array(
+            'PurchaseWithThreeDSecureNotEnrolled.txt',
+            'PurchaseSuccessWithThreeDSecureNotEnrolled.txt'
+        ));
         $response = $this->gateway->purchase(array_merge($this->options, array(
             'returnUrl'         => 'http://dummy.return/url',
             'applyThreeDSecure' => true,
@@ -179,17 +182,11 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('Ok', $response->getMessage());
         $this->assertSame(0, $response->getCode());
         $this->assertNull($response->getErrorData());
-        $this->assertSame('6-9-1923134', $response->getTransactionReference());
+        $this->assertSame('7-9-1796835', $response->getTransactionReference());
         $this->assertSame(0, $response->getSettleStatus());
-        $this->assertSame('2015-09-24', $response->getSettleDueDate());
+        $this->assertSame('2015-09-25', $response->getSettleDueDate());
 
-        $this->assertSame('N', $response->getEnrolled());
-        $this->assertFalse($response->isEnrolled());
-        $this->assertNull($response->getMd());
-        $this->assertSame('WmpqVzNjeFM3RnVGSUVKbm1WaFA=', $response->getXid());
-        $this->assertNull($response->getPaReq());
-        $this->assertNull($response->getRedirectUrl());
-        $this->assertNull($response->getRedirectData());
+        $this->assertSame('7-9-1796834', (string)$response->getData()->response->operation->parenttransactionreference);
     }
 
     public function testCompletePurchaseSuccess()
@@ -282,7 +279,7 @@ class GatewayTest extends GatewayTestCase
             'returnUrl' => 'http://dummy.return/url',
         )))->send();
 
-        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->isRedirect());
         $this->assertSame('Ok', $response->getMessage());
         $this->assertSame(0, $response->getCode());
