@@ -90,9 +90,9 @@ class ThreeDSecureResponse extends Response implements RedirectResponseInterface
         }
 
         return array(
-            'PaReq' => $this->getPaReq(),
+            'PaReq'   => $this->getPaReq(),
             'TermUrl' => $this->getRequest()->getReturnUrl(),
-            'MD' => $this->getMd(),
+            'MD'      => $this->getMd(),
         );
     }
 }

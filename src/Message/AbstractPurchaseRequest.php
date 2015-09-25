@@ -22,7 +22,7 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
      */
     public function getAccept()
     {
-        is_null($this->getParameter('accept'))
+        return is_null($this->getParameter('accept'))
             ? $this->determineAccept() : $this->getParameter('accept');
     }
 
@@ -97,7 +97,7 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
         $operation->addChild('authmethod', 'FINAL');
 
         $billing = $request->addChild('billing');
-        $amount = $billing->addChild('amount', $this->getAmountInteger());
+        $amount  = $billing->addChild('amount', $this->getAmountInteger());
         $amount->addAttribute('currencycode', $this->getCurrency());
 
         if ($this->getCardReference()) {
@@ -143,10 +143,11 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
         $billing->addChild('town', $card->getBillingCity());
         $billing->addChild('postcode', $card->getBillingPostcode());
 
-        $address = implode(', ',
+        $address = implode(
+            ', ',
             array_filter(array(
                 $card->getBillingAddress1(),
-                $card->getBillingAddress2()
+                $card->getBillingAddress2(),
             ))
         ) ?: null;
         $billing->addChild('street', $address);
@@ -175,10 +176,11 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
         $customer->addChild('town', $card->getShippingCity());
         $customer->addChild('postcode', $card->getShippingPostcode());
 
-        $address = implode(', ',
+        $address = implode(
+            ', ',
             array_filter(array(
                 $card->getShippingAddress1(),
-                $card->getShippingAddress2()
+                $card->getShippingAddress2(),
             ))
         ) ?: null;
         $customer->addChild('street', $address);

@@ -23,9 +23,9 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'siteReference'     => '',
-            'username'          => '',
-            'password'          => '',
+            'siteReference' => '',
+            'username'      => '',
+            'password'      => '',
         );
     }
 

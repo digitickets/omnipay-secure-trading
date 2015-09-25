@@ -121,7 +121,7 @@ class GatewayTest extends GatewayTestCase
     public function testPurchaseWithThreeDSecureEnrolled()
     {
         $this->setMockHttpResponse('PurchaseWithThreeDSecureEnrolled.txt');
-        $response = $this->gateway->threeDSecure(array_merge($this->options, array(
+        $response = $this->gateway->purchase(array_merge($this->options, array(
             'returnUrl'         => 'http://dummy.return/url',
             'applyThreeDSecure' => true,
         )))->send();
@@ -143,7 +143,9 @@ class GatewayTest extends GatewayTestCase
             'YzJFdVkyZHBQQzloWTNOVmNtdytQSEJoYmt4bGJtZDBhRDR4Tmp3dmNHRnVUR1Z1WjNSb1BqeHRaWE56' .
             'WVdkbFNXUStVRUZTWlhFdE1UUTBNekE0TmpBNU5EWTJNQzB0TWpBeU1qSTNOVFl3Tmp3dmJXVnpjMkZu' .
             'WlVsa1Bqd3ZUVVErUEM5VFZEND06bWRjU2NVNFlRamFIOUppUFhwNDZ3S1Z1QktQVkt1eHd6TzZsYUZv' .
-            'WHZILzk2OUNnVU5GQ2tMVXJBUGZQcVh4VUls', $response->getMd());
+            'WHZILzk2OUNnVU5GQ2tMVXJBUGZQcVh4VUls',
+            $response->getMd()
+        );
         $this->assertSame('RWFrVW9lSkZYYytadUVFRkFYWXg=', $response->getXid());
         $this->assertSame(
             'eJxVUk1vwjAM/SuIe0ka2o4ik4mB0DhsmmCDsVtILVpBP0hTVP79ktKO4ZOf4zzbz4bPWCHO1ygrhRze' .
@@ -152,7 +154,9 @@ class GatewayTest extends GatewayTestCase
             'fZI7eZolhbg6ZTOmo5WIkuxAsBZpccKB+fAspDZNT4YREEsF5N79R2W90pSuk4ivtgu12Yan9fFnt7tq' .
             'EX1tFqvjYrf9PkyA2AyIhEbOqOvTkHk9Go5db+x7QJo4iNT2zMOREeLmQmErTO/x/xhMywoz2Q3cIcC6' .
             'yDM0GUbzPx8iLCXXWGrHqm1qWgzkPsPs1e5DaiOx51prdWeuazfTPFjuxKhqZriRWwDEfiXt0kl7KsZ7' .
-            'OKFfMenCUw==', $response->getPaReq());
+            'OKFfMenCUw==',
+            $response->getPaReq()
+        );
         $this->assertSame('https://webapp.securetrading.net/acs/visa.cgi', $response->getRedirectUrl());
         $this->assertSame(array(
             'PaReq'   => $response->getPaReq(),
@@ -165,7 +169,7 @@ class GatewayTest extends GatewayTestCase
     public function testPurchaseWithThreeDSecureNotEnrolled()
     {
         $this->setMockHttpResponse('PurchaseWithThreeDSecureNotEnrolled.txt');
-        $response = $this->gateway->threeDSecure(array_merge($this->options, array(
+        $response = $this->gateway->purchase(array_merge($this->options, array(
             'returnUrl'         => 'http://dummy.return/url',
             'applyThreeDSecure' => true,
         )))->send();
@@ -295,7 +299,9 @@ class GatewayTest extends GatewayTestCase
             'YzJFdVkyZHBQQzloWTNOVmNtdytQSEJoYmt4bGJtZDBhRDR4Tmp3dmNHRnVUR1Z1WjNSb1BqeHRaWE56' .
             'WVdkbFNXUStVRUZTWlhFdE1UUTBNekE0TmpBNU5EWTJNQzB0TWpBeU1qSTNOVFl3Tmp3dmJXVnpjMkZu' .
             'WlVsa1Bqd3ZUVVErUEM5VFZEND06bWRjU2NVNFlRamFIOUppUFhwNDZ3S1Z1QktQVkt1eHd6TzZsYUZv' .
-            'WHZILzk2OUNnVU5GQ2tMVXJBUGZQcVh4VUls', $response->getMd());
+            'WHZILzk2OUNnVU5GQ2tMVXJBUGZQcVh4VUls',
+            $response->getMd()
+        );
         $this->assertSame('RWFrVW9lSkZYYytadUVFRkFYWXg=', $response->getXid());
         $this->assertSame(
             'eJxVUk1vwjAM/SuIe0ka2o4ik4mB0DhsmmCDsVtILVpBP0hTVP79ktKO4ZOf4zzbz4bPWCHO1ygrhRze' .
@@ -304,7 +310,9 @@ class GatewayTest extends GatewayTestCase
             'fZI7eZolhbg6ZTOmo5WIkuxAsBZpccKB+fAspDZNT4YREEsF5N79R2W90pSuk4ivtgu12Yan9fFnt7tq' .
             'EX1tFqvjYrf9PkyA2AyIhEbOqOvTkHk9Go5db+x7QJo4iNT2zMOREeLmQmErTO/x/xhMywoz2Q3cIcC6' .
             'yDM0GUbzPx8iLCXXWGrHqm1qWgzkPsPs1e5DaiOx51prdWeuazfTPFjuxKhqZriRWwDEfiXt0kl7KsZ7' .
-            'OKFfMenCUw==', $response->getPaReq());
+            'OKFfMenCUw==',
+            $response->getPaReq()
+        );
         $this->assertSame('https://webapp.securetrading.net/acs/visa.cgi', $response->getRedirectUrl());
         $this->assertSame(array(
             'PaReq'   => $response->getPaReq(),

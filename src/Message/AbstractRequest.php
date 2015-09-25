@@ -99,7 +99,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
      */
     public function sendData($data)
     {
-        $headers      = array(
+        $headers     = array(
             'Content-Type: text/xml;charset=utf-8',
             'Accept: text/xml',
         );
