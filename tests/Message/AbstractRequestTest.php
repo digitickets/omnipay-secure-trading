@@ -2,7 +2,6 @@
 
 namespace Omnipay\SecureTrading\Test\Message;
 
-use Guzzle\Http\Client;
 use Omnipay\SecureTrading\Message\AbstractRequest;
 use Omnipay\Tests\TestCase;
 

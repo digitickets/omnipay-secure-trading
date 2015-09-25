@@ -7,7 +7,7 @@ use Omnipay\Common\Exception\InvalidRequestException;
 use SimpleXMLElement;
 
 /**
- * AbstractAuth Request
+ * AbstractPurchase Request
  *
  * @method Response send()
  */
