@@ -29,26 +29,25 @@ For general usage instructions, please see the main [Omnipay](https://github.com
 
 This driver supports following transaction types:
 
-- authorize($options) - authorize an amount on the customer's card
-- capture($options) - capture an amount you have previously authorized
-- purchase($options) - authorize and immediately capture an amount on the customer's card
-- refund($options) - refund an already processed transaction
-- void($options) - generally can only be called up to 24 hours after submitting a transaction
+- `purchase($options)` - authorize and immediately capture an amount on the customer's card
+- `completePurchase($options)` - handle return from off-site gateways after purchase
+- `refund($options)` - refund an already processed transaction
+- `threeDSecure($options)` - authorize customer's card through 3D Secure process, same as `purchase($options)`
+ with option `applyThreeDSecure` set to true
 
 Gateway instantiation:
 
     $gateway = Omnipay::create('Secure_Trading');
-    $gateway->setTerminalId('1234567');
-    $gateway->setTransactionKey('5CbEvA8hDCe6ASd6');
-    $gateway->setTestMode(true);
+    $gateway->setSiteReference('siteReference123');
+    $gateway->setUsername('username123');
+    $gateway->setPassword('password123');
 
-Driver also supports paying with `cardReference` instead of `card`, 
-but gateway requires also additional parameter `cardHash`. It can be used in authorize and purchase requests like that:
+Driver also supports paying with `cardReference` instead of `card`.
+ It can be used in authorize and purchase requests like that:
 
     $gateway->purchase([
         'amount'        => '10.00',
         'cardReference' => 'abc',
-        'cardHash'      => 'def123',
     ]);
 
 ## Support
