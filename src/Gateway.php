@@ -23,9 +23,9 @@ class Gateway extends AbstractGateway
     public function getDefaultParameters()
     {
         return array(
-            'siteReference' => '',
-            'username'      => '',
-            'password'      => '',
+            'siteReference'     => '',
+            'username'          => '',
+            'password'          => '',
         );
     }
 
@@ -114,14 +114,5 @@ class Gateway extends AbstractGateway
     public function threeDSecure(array $parameters = array())
     {
         return $this->createRequest('\Omnipay\SecureTrading\Message\ThreeDSecureRequest', $parameters);
-    }
-
-    /**
-     * @param array $parameters
-     * @return Message\CreateCardRequest
-     */
-    public function createCard(array $parameters = array())
-    {
-        return $this->createRequest('\Omnipay\SecureTrading\Message\CreateCardRequest', $parameters);
     }
 }

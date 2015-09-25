@@ -1,0 +1,47 @@
+HTTP/1.1 200 OK
+Date: Thu, 24 Sep 2015 09:43:29 GMT
+Server: webservices gateway 6 mod_fcgid/2.3.6
+Content-Length: 1219
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<responseblock version="3.67">
+  <requestreference>W6-7j2m63n9</requestreference>
+  <response type="THREEDQUERY">
+    <merchant>
+      <merchantname>VoucherCart</merchantname>
+      <orderreference>test-1234</orderreference>
+      <tid>27882788</tid>
+      <merchantnumber>00000000</merchantnumber>
+      <merchantcountryiso2a>GB</merchantcountryiso2a>
+    </merchant>
+    <transactionreference>6-9-1923134</transactionreference>
+    <billing>
+      <payment type="VISA">
+        <issuercountry>US</issuercountry>
+        <pan>428134######3094</pan>
+        <issuer>TestIssuer 5</issuer>
+      </payment>
+      <dcc enabled="0"/>
+    </billing>
+    <timestamp>2015-09-24 09:43:29</timestamp>
+    <threedsecure>
+      <xid>WmpqVzNjeFM3RnVGSUVKbm1WaFA=</xid>
+      <enrolled>N</enrolled>
+    </threedsecure>
+    <live>0</live>
+    <error>
+      <message>Ok</message>
+      <code>0</code>
+    </error>
+    <operation>
+      <authmethod>FINAL</authmethod>
+      <accounttypedescription>ECOM</accounttypedescription>
+    </operation>
+    <settlement>
+      <settleduedate>2015-09-24</settleduedate>
+      <settlestatus>0</settlestatus>
+    </settlement>
+  </response>
+</responseblock>

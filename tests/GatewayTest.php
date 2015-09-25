@@ -35,6 +35,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->options = array(
             'amount'        => '0.98',
+            'currency'      => 'GBP',
             'transactionId' => 'test-1234',
             'card'          => $this->getValidCard(),
         );
@@ -115,6 +116,76 @@ class GatewayTest extends GatewayTestCase
         $this->assertNull($response->getCardReference());
         $this->assertNull($response->getSettleStatus());
         $this->assertNull($response->getSettleDueDate());
+    }
+
+    public function testPurchaseWithThreeDSecureEnrolled()
+    {
+        $this->setMockHttpResponse('PurchaseWithThreeDSecureEnrolled.txt');
+        $response = $this->gateway->threeDSecure(array_merge($this->options, array(
+            'returnUrl'         => 'http://dummy.return/url',
+            'applyThreeDSecure' => true,
+        )))->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertTrue($response->isRedirect());
+        $this->assertSame('Ok', $response->getMessage());
+        $this->assertSame(0, $response->getCode());
+        $this->assertNull($response->getErrorData());
+        $this->assertSame('7-9-1794658', $response->getTransactionReference());
+        $this->assertSame(0, $response->getSettleStatus());
+        $this->assertSame('2015-09-24', $response->getSettleDueDate());
+
+        $this->assertSame('Y', $response->getEnrolled());
+        $this->assertTrue($response->isEnrolled());
+        $this->assertSame(
+            'UEZOVVBqeE5SRDQ4VFVSSVBuaHhURXBpT1M4d1ZHeEhSR052T1VobFQzSTNUMUU5UFR3dlRVUklQanho' .
+            'WTNOVmNtdythSFIwY0hNNkx5OTNaV0poY0hBdWMyVmpkWEpsZEhKaFpHbHVaeTV1WlhRdllXTnpMM1pw' .
+            'YzJFdVkyZHBQQzloWTNOVmNtdytQSEJoYmt4bGJtZDBhRDR4Tmp3dmNHRnVUR1Z1WjNSb1BqeHRaWE56' .
+            'WVdkbFNXUStVRUZTWlhFdE1UUTBNekE0TmpBNU5EWTJNQzB0TWpBeU1qSTNOVFl3Tmp3dmJXVnpjMkZu' .
+            'WlVsa1Bqd3ZUVVErUEM5VFZEND06bWRjU2NVNFlRamFIOUppUFhwNDZ3S1Z1QktQVkt1eHd6TzZsYUZv' .
+            'WHZILzk2OUNnVU5GQ2tMVXJBUGZQcVh4VUls', $response->getMd());
+        $this->assertSame('RWFrVW9lSkZYYytadUVFRkFYWXg=', $response->getXid());
+        $this->assertSame(
+            'eJxVUk1vwjAM/SuIe0ka2o4ik4mB0DhsmmCDsVtILVpBP0hTVP79ktKO4ZOf4zzbz4bPWCHO1ygrhRze' .
+            'sCzFAXtJNOl/TFd4dlzPG9JRQEMvCKjjMMoYe/IDGvQ5NBkcLqjKJM+4O6ADBqSDhkzJWGSag5Dnl+U7' .
+            'd9nQ8wMgLYQU1XLO6aMBuYUhEynyTV7JGNVMKA2kiYDMq0yrKx8xQ9UBqNSJx1oXY0KKuNjn9SDCi6HC' .
+            'fZI7eZolhbg6ZTOmo5WIkuxAsBZpccKB+fAspDZNT4YREEsF5N79R2W90pSuk4ivtgu12Yan9fFnt7tq' .
+            'EX1tFqvjYrf9PkyA2AyIhEbOqOvTkHk9Go5db+x7QJo4iNT2zMOREeLmQmErTO/x/xhMywoz2Q3cIcC6' .
+            'yDM0GUbzPx8iLCXXWGrHqm1qWgzkPsPs1e5DaiOx51prdWeuazfTPFjuxKhqZriRWwDEfiXt0kl7KsZ7' .
+            'OKFfMenCUw==', $response->getPaReq());
+        $this->assertSame('https://webapp.securetrading.net/acs/visa.cgi', $response->getRedirectUrl());
+        $this->assertSame(array(
+            'PaReq'   => $response->getPaReq(),
+            'TermUrl' => $response->getRequest()->getReturnUrl(),
+            'MD'      => $response->getMd(),
+        ), $response->getRedirectData());
+        $this->assertSame('POST', $response->getRedirectMethod());
+    }
+
+    public function testPurchaseWithThreeDSecureNotEnrolled()
+    {
+        $this->setMockHttpResponse('PurchaseWithThreeDSecureNotEnrolled.txt');
+        $response = $this->gateway->threeDSecure(array_merge($this->options, array(
+            'returnUrl'         => 'http://dummy.return/url',
+            'applyThreeDSecure' => true,
+        )))->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+        $this->assertSame('Ok', $response->getMessage());
+        $this->assertSame(0, $response->getCode());
+        $this->assertNull($response->getErrorData());
+        $this->assertSame('6-9-1923134', $response->getTransactionReference());
+        $this->assertSame(0, $response->getSettleStatus());
+        $this->assertSame('2015-09-24', $response->getSettleDueDate());
+
+        $this->assertSame('N', $response->getEnrolled());
+        $this->assertFalse($response->isEnrolled());
+        $this->assertNull($response->getMd());
+        $this->assertSame('WmpqVzNjeFM3RnVGSUVKbm1WaFA=', $response->getXid());
+        $this->assertNull($response->getPaReq());
+        $this->assertNull($response->getRedirectUrl());
+        $this->assertNull($response->getRedirectData());
     }
 
     public function testCompletePurchaseSuccess()
@@ -240,6 +311,7 @@ class GatewayTest extends GatewayTestCase
             'TermUrl' => $response->getRequest()->getReturnUrl(),
             'MD'      => $response->getMd(),
         ), $response->getRedirectData());
+        $this->assertSame('POST', $response->getRedirectMethod());
     }
 
     public function testThreeDSecureNotEnrolled()
@@ -265,15 +337,5 @@ class GatewayTest extends GatewayTestCase
         $this->assertNull($response->getPaReq());
         $this->assertNull($response->getRedirectUrl());
         $this->assertNull($response->getRedirectData());
-    }
-
-    public function testCreateCardRequestSuccess()
-    {
-        $this->setMockHttpResponse('CreateCardSuccess.txt');
-        $response = $this->gateway->createCard($this->options)->send();
-
-        $this->assertTrue($response->isSuccessful());
-        $this->assertSame('Ok', $response->getMessage());
-        $this->assertSame('33-52-9', $response->getTransactionReference());
     }
 }
