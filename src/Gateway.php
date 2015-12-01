@@ -26,6 +26,7 @@ class Gateway extends AbstractGateway
             'siteReference' => '',
             'username'      => '',
             'password'      => '',
+            'applyThreeDSecure' => false,
         );
     }
 
@@ -79,6 +80,24 @@ class Gateway extends AbstractGateway
     {
         return $this->setParameter('password', $value);
     }
+    
+    /**
+     * @return boolean
+     */
+    public function getApplyThreeDSecure()
+    {
+        return $this->getParameter('applyThreeDSecure');
+    }
+
+    /**
+     * @param boolean $value
+     * @return $this
+     */
+    public function setApplyThreeDSecure($value)
+    {
+        return $this->setParameter('applyThreeDSecure', $value);
+    }
+
 
     /**
      * @param array $parameters
