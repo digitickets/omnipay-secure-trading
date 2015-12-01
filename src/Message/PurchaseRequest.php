@@ -17,23 +17,6 @@ class PurchaseRequest extends AbstractPurchaseRequest
     }
 
     /**
-     * return string
-     */
-    public function getApplyThreeDSecure()
-    {
-        return $this->getParameter('applyThreeDSecure');
-    }
-
-    /**
-     * @param bool $value
-     * @return $this
-     */
-    public function setApplyThreeDSecure($value)
-    {
-        return $this->setParameter('applyThreeDSecure', $value);
-    }
-
-    /**
      * @return SimpleXMLElement
      */
     public function getData()

@@ -72,6 +72,23 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
     /**
+     * @return boolean
+     */
+    public function getApplyThreeDSecure()
+    {
+        return $this->getParameter('applyThreeDSecure');
+    }
+
+    /**
+     * @param boolean $value
+     * @return $this
+     */
+    public function setApplyThreeDSecure($value)
+    {
+        return $this->setParameter('applyThreeDSecure', $value);
+    }
+
+    /**
      * @return SimpleXMLElement
      */
     public function getBaseData()
