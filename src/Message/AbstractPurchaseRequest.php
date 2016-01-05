@@ -114,6 +114,10 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
             $payment->addChild('expirydate', $card->getExpiryDate('m/Y'));
             $payment->addChild('securitycode', $card->getCvv());
         }
+        
+        /** @var SimpleXMLElement $customer */
+        $customer = $data->request->customer ?: $data->request->addChild('customer');
+        $customer->addChild('ip', $this->getClientIp());
 
         if ($this->getCard()) {
             $this->setBillingCredentials($data);
