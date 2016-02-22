@@ -3,6 +3,7 @@
 namespace Omnipay\SecureTrading\Test;
 
 use Omnipay\SecureTrading\Gateway;
+use Omnipay\SecureTrading\Message\TransactionUpdateRequest;
 use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
@@ -34,10 +35,10 @@ class GatewayTest extends GatewayTestCase
         $this->gateway->setPassword('pass123');
 
         $this->options = array(
-            'amount'        => '0.98',
-            'currency'      => 'GBP',
+            'amount' => '0.98',
+            'currency' => 'GBP',
             'transactionId' => 'test-1234',
-            'card'          => $this->getValidCard(),
+            'card' => $this->getValidCard(),
         );
     }
 
@@ -84,7 +85,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('PurchaseCardReferenceSuccess.txt');
         $response = $this->gateway->purchase(array_merge($this->options, array(
-            'card'          => null,
+            'card' => null,
             'cardReference' => '6-9-1918130',
         )))->send();
 
@@ -103,7 +104,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('PurchaseCardReferenceFailure.txt');
         $response = $this->gateway->purchase(array_merge($this->options, array(
-            'card'          => null,
+            'card' => null,
             'cardReference' => '6-9-1918130X',
         )))->send();
 
@@ -122,7 +123,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('PurchaseWithThreeDSecureEnrolled.txt');
         $response = $this->gateway->purchase(array_merge($this->options, array(
-            'returnUrl'         => 'http://dummy.return/url',
+            'returnUrl' => 'http://dummy.return/url',
             'applyThreeDSecure' => true,
         )))->send();
 
@@ -159,9 +160,9 @@ class GatewayTest extends GatewayTestCase
         );
         $this->assertSame('https://webapp.securetrading.net/acs/visa.cgi', $response->getRedirectUrl());
         $this->assertSame(array(
-            'PaReq'   => $response->getPaReq(),
+            'PaReq' => $response->getPaReq(),
             'TermUrl' => $response->getRequest()->getReturnUrl(),
-            'MD'      => $response->getMd(),
+            'MD' => $response->getMd(),
         ), $response->getRedirectData());
         $this->assertSame('POST', $response->getRedirectMethod());
     }
@@ -173,7 +174,7 @@ class GatewayTest extends GatewayTestCase
             'PurchaseSuccessWithThreeDSecureNotEnrolled.txt',
         ));
         $response = $this->gateway->purchase(array_merge($this->options, array(
-            'returnUrl'         => 'http://dummy.return/url',
+            'returnUrl' => 'http://dummy.return/url',
             'applyThreeDSecure' => true,
         )))->send();
 
@@ -193,7 +194,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
         $response = $this->gateway->completePurchase(array(
-            'md'    => 'dummy',
+            'md' => 'dummy',
             'paRes' => 'dummy',
         ))->send();
 
@@ -218,7 +219,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('CompletePurchaseFailure.txt');
         $response = $this->gateway->completePurchase(array(
-            'md'    => 'dummy',
+            'md' => 'dummy',
             'paRes' => 'dummy',
         ))->send();
 
@@ -240,7 +241,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('RefundSuccess.txt');
         $response = $this->gateway->refund(array(
-            'amount'               => '0.66',
+            'amount' => '0.66',
             'transactionReference' => '6-9-1922866',
         ))->send();
 
@@ -258,7 +259,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->setMockHttpResponse('RefundFailure.txt');
         $response = $this->gateway->refund(array(
-            'amount'               => '1.00',
+            'amount' => '1.00',
             'transactionReference' => '3-9-2205014',
         ))->send();
 
@@ -312,9 +313,9 @@ class GatewayTest extends GatewayTestCase
         );
         $this->assertSame('https://webapp.securetrading.net/acs/visa.cgi', $response->getRedirectUrl());
         $this->assertSame(array(
-            'PaReq'   => $response->getPaReq(),
+            'PaReq' => $response->getPaReq(),
             'TermUrl' => $response->getRequest()->getReturnUrl(),
-            'MD'      => $response->getMd(),
+            'MD' => $response->getMd(),
         ), $response->getRedirectData());
         $this->assertSame('POST', $response->getRedirectMethod());
     }
@@ -342,5 +343,29 @@ class GatewayTest extends GatewayTestCase
         $this->assertNull($response->getPaReq());
         $this->assertNull($response->getRedirectUrl());
         $this->assertNull($response->getRedirectData());
+    }
+
+    public function testTransactionUpdate()
+    {
+        $this->setMockHttpResponse('TransactionUpdateSuccess.txt');
+        $response = $this->gateway->transactionUpdate(array_merge($this->options, [
+            'siteReference' => 'testSiteReference',
+            'transactionReference' => 'testTransactionReference',
+            'updates' => [
+                'merchant' => [
+                    'orderreference' => 255
+                ],
+                'settlement' => [
+                    'settlebaseamount' => 0,
+                    'settleduedate' => '01-01-2015',
+                    'settlemainamount' => 200,
+                    'settlemainamountcurrencycode' => 'EUR',
+                    'settlestatus' => 1
+                ]
+            ]
+        ]))->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
     }
 }
