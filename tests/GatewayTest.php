@@ -3,6 +3,7 @@
 namespace Omnipay\SecureTrading\Test;
 
 use Omnipay\SecureTrading\Gateway;
+use Omnipay\SecureTrading\Message\TransactionQueryResponse;
 use Omnipay\SecureTrading\Message\TransactionUpdateRequest;
 use Omnipay\Tests\GatewayTestCase;
 
@@ -364,6 +365,29 @@ class GatewayTest extends GatewayTestCase
                 ]
             ]
         ]))->send();
+
+        $this->assertTrue($response->isSuccessful());
+        $this->assertFalse($response->isRedirect());
+    }
+
+    public function testTransactionQuery()
+    {
+        $this->setMockHttpResponse('TransactionQuerySuccess.txt');
+        /**
+         * @var $response TransactionQueryResponse
+         */
+        $response = $this->gateway->transactionQuery(array_merge($this->options, [
+            'siteReference' => 'testSiteReference',
+            'transactionReferences' => [
+                '50-2-2'
+            ]
+        ]))->send();
+
+        foreach ($response->getRecords() as $record) {
+            $this->assertInternalType('integer', $response->getOrderStatusForRecord($record));
+            $this->assertNotEmpty($response->getOrderReferenceForRecord($record));
+            $this->assertNotEmpty($response->getTransactionReferenceForRecord($record));
+        }
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
