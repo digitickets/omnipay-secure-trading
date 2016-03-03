@@ -69,7 +69,7 @@ class CompletePurchaseRequest extends AbstractRequest
 
         /** @var SimpleXmlElement $operation */
         $operation = $request->operation;
-        $operation->addChild('accounttypedescription', 'ECOM');
+        $operation->addChild('accounttypedescription', $this->getAccountType('ECOM'));
         $operation->addChild('authmethod', 'FINAL');
 
         $operation->addChild('md', $this->getMd());
