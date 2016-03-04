@@ -21,12 +21,12 @@ class TransactionQueryResponse extends Response
         return (int) ((string) $record->xpath('settlement/settlestatus')[0]);
     }
 
-    public function getOrderReferenceForRecord(\SimpleXMLElement $record)
+    public function getTransactionReferenceForRecord(\SimpleXMLElement $record)
     {
         return (string) $record->xpath('transactionreference')[0];
     }
 
-    public function getTransactionReferenceForRecord(\SimpleXMLElement $record)
+    public function getOrderReferenceForRecord(\SimpleXMLElement $record)
     {
         return (string) $record->xpath('merchant/orderreference')[0];
     }
