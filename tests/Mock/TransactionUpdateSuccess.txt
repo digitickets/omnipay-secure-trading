@@ -1,0 +1,17 @@
+HTTP/1.1 200 OK
+Date: Thu, 24 Sep 2015 06:42:39 GMT
+Server: webservices gateway 6 mod_fcgid/2.3.6
+Content-Length: 1419
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<responseblock version="3.67">
+    <requestreference>X675136983</requestreference>
+    <response type="TRANSACTIONUPDATE">
+        <timestamp>2010-03-11 16:38:47</timestamp>
+        <error>
+            <code>0</code>
+        </error>
+    </response>
+</responseblock>

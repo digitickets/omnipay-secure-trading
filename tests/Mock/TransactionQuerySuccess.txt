@@ -1,0 +1,167 @@
+HTTP/1.1 200 OK
+Date: Thu, 24 Sep 2015 06:42:39 GMT
+Server: webservices gateway 6 mod_fcgid/2.3.6
+Content-Length: 1419
+Vary: Accept-Encoding
+Content-Type: text/xml
+
+<?xml version='1.0' encoding='utf-8'?>
+<responseblock version="3.67">
+    <requestreference>X810339554</requestreference>
+    <response type="TRANSACTIONQUERY">
+        <found>1</found>
+        <timestamp>2014-02-25 17:10:42</timestamp>
+        <record type="AUTH">
+            <acquirerresponsecode>00</acquirerresponsecode>
+            <operation>
+                <interface>STPAYSTAPI</interface>
+                <sitereference>site12345</sitereference>
+                <accounttypedescription>ECOM</accounttypedescription>
+            </operation>
+            <settlement>
+                <settleduedate>2014-02-25</settleduedate>
+                <settlebaseamount>100</settlebaseamount>
+                <settlestatus>100</settlestatus>
+            </settlement>
+            <billing>
+                <telephone type="M">0777777777</telephone>
+                <dcc enabled="0"/>
+                <county>Gwynedd</county>
+                <street>Test Street</street>
+                <postcode>TE45 6ST</postcode>
+                <premise>789</premise>
+                <payment type="VISA">
+                    <issuer>SecureTrading Test Issuer1</issuer>
+                    <expirydate>10/2031</expirydate>
+                    <pan>411111######0211</pan>
+                    <issuercountry>US</issuercountry>
+                </payment>
+                <town>Bangor</town>
+                <name>
+                    <middle>joe</middle>
+                    <prefix>Dr</prefix>
+                    <last>bloggs</last>
+                    <suffix>Jr.</suffix>
+                    <first>fred</first>
+                </name>
+                <country>GB</country>
+                <amount currencycode="GBP">100</amount>
+                <email>fred.bloggs@example.com</email>
+            </billing>
+            <live>0</live>
+            <merchant>
+                <merchantname>Test Merchant</merchantname>
+                <orderreference>AUTH_VISA</orderreference>
+                <tid>12345678</tid>
+                <merchantcountryiso2a>GB</merchantcountryiso2a>
+            </merchant>
+            <transactionreference>50-2-2</transactionreference>
+            <timestamp>2014-02-25 17:09:53</timestamp>
+            <error>
+                <message>Ok</message>
+                <code>0</code>
+            </error>
+            <customer>
+                <ip>1.2.3.4</ip>
+                <telephone type="H">1111111111</telephone>
+                <street>Second Street</street>
+                <postcode>CU888ST</postcode>
+                <premise>111</premise>
+                <town>Bangor</town>
+                <name>
+                    <middle>Mary</middle>
+                    <prefix>Miss</prefix>
+                    <last>Smith</last>
+                    <first>Joanne</first>
+                </name>
+            </customer>
+            <fraud>
+                <rating>-1</rating>
+            </fraud>
+            <authcode>TEST</authcode>
+            <security>
+                <postcode>2</postcode>
+                <securitycode>2</securitycode>
+                <address>2</address>
+            </security>
+        </record>
+        <record type="AUTH">
+            <acquirerresponsecode>00</acquirerresponsecode>
+            <operation>
+                <interface>STPAYSTAPI</interface>
+                <sitereference>site12345</sitereference>
+                <accounttypedescription>ECOM</accounttypedescription>
+            </operation>
+            <settlement>
+                <settleduedate>2014-02-25</settleduedate>
+                <settlebaseamount>100</settlebaseamount>
+                <settlestatus>0</settlestatus>
+            </settlement>
+            <billing>
+                <telephone type="M">0777777777</telephone>
+                <dcc enabled="0"/>
+                <county>Gwynedd</county>
+                <street>Test Street</street>
+                <postcode>TE45 6ST</postcode>
+                <premise>789</premise>
+                <payment type="VISA">
+                    <issuer>SecureTrading Test Issuer1</issuer>
+                    <expirydate>10/2031</expirydate>
+                    <pan>411111######0211</pan>
+                    <issuercountry>US</issuercountry>
+                </payment>
+                <town>Bangor</town>
+                <name>
+                    <middle>joe</middle>
+                    <prefix>Dr</prefix>
+                    <last>bloggs</last>
+                    <suffix>Jr.</suffix>
+                    <first>fred</first>
+                </name>
+                <country>GB</country>
+                <amount currencycode="GBP">100</amount>
+                <email>fred.bloggs@example.com</email>
+            </billing>
+            <live>0</live>
+            <merchant>
+                <merchantname>Test Merchant</merchantname>
+                <orderreference>AUTH_VISA</orderreference>
+                <tid>12345678</tid>
+                <merchantcountryiso2a>GB</merchantcountryiso2a>
+            </merchant>
+            <transactionreference>50-2-2</transactionreference>
+            <timestamp>2014-02-25 17:09:53</timestamp>
+            <error>
+                <message>Ok</message>
+                <code>0</code>
+            </error>
+            <customer>
+                <ip>1.2.3.4</ip>
+                <telephone type="H">1111111111</telephone>
+                <street>Second Street</street>
+                <postcode>CU888ST</postcode>
+                <premise>111</premise>
+                <town>Bangor</town>
+                <name>
+                    <middle>Mary</middle>
+                    <prefix>Miss</prefix>
+                    <last>Smith</last>
+                    <first>Joanne</first>
+                </name>
+            </customer>
+            <fraud>
+                <rating>-1</rating>
+            </fraud>
+            <authcode>TEST</authcode>
+            <security>
+                <postcode>2</postcode>
+                <securitycode>2</securitycode>
+                <address>2</address>
+            </security>
+        </record>
+        <error>
+            <message>Ok</message>
+            <code>0</code>
+        </error>
+    </response>
+</responseblock>

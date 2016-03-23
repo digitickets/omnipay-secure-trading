@@ -89,6 +89,29 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
     /**
+     * ECOM = AUTH REQUEST
+     * MOTO = PHONE PAYMENT
+     * RECUR = RECURRING PAYMENT
+     *
+     * @param string $default
+     * @return string
+     */
+    public function getAccountType($default)
+    {
+        $accountType = $this->getParameter('accountType');
+        return $accountType === null ? $default : $accountType;
+    }
+
+    /**
+     * @param string $value
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function setAccountType($value)
+    {
+        return $this->setParameter('accountType', $value);
+    }
+
+    /**
      * @return SimpleXMLElement
      */
     public function getBaseData()

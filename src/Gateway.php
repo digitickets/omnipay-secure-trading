@@ -134,4 +134,22 @@ class Gateway extends AbstractGateway
     {
         return $this->createRequest('\Omnipay\SecureTrading\Message\ThreeDSecureRequest', $parameters);
     }
+
+    /**
+     * @param array $parameters
+     * @return Message\TransactionUpdateRequest
+     */
+    public function transactionUpdate(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\SecureTrading\Message\TransactionUpdateRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return \Omnipay\Common\Message\AbstractRequest
+     */
+    public function transactionQuery(array $parameters = [])
+    {
+        return $this->createRequest('\Omnipay\SecureTrading\Message\TransactionQueryRequest', $parameters);
+    }
 }
