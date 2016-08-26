@@ -27,6 +27,7 @@ class Gateway extends AbstractGateway
             'username'      => '',
             'password'      => '',
             'applyThreeDSecure' => false,
+            'accountType'   => 'ECOM',
         );
     }
 
@@ -96,6 +97,23 @@ class Gateway extends AbstractGateway
     public function setApplyThreeDSecure($value)
     {
         return $this->setParameter('applyThreeDSecure', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAccountType()
+    {
+        return $this->getParameter('accountType');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setAccountType($value)
+    {
+        return $this->setParameter('accountType', $value);
     }
 
 

@@ -89,6 +89,23 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
     /**
+     * @return string
+     */
+    public function getAccountType()
+    {
+        return $this->getParameter('accountType');
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setAccountType($value)
+    {
+        return $this->setParameter('accountType', $value);
+    }
+
+    /**
      * @return SimpleXMLElement
      */
     public function getBaseData()
