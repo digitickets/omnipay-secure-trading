@@ -32,6 +32,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway->setSiteReference('dummy_site_reference');
         $this->gateway->setUsername('username@dummy.local');
         $this->gateway->setPassword('pass123');
+        $this->gateway->setAccountType('ECOM');
 
         $this->options = array(
             'amount'        => '0.98',
@@ -46,6 +47,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame('dummy_site_reference', $this->gateway->getSiteReference());
         $this->assertSame('username@dummy.local', $this->gateway->getUsername());
         $this->assertSame('pass123', $this->gateway->getPassword());
+        $this->assertSame('ECOM', $this->gateway->getAccountType());
     }
 
     public function testPurchaseSuccess()
