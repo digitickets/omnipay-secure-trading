@@ -19,6 +19,7 @@ abstract class AbstractRequestTest extends TestCase
             'username'      => 'test-username',
             'password'      => 'test-password',
             'transactionId' => 'test-1234',
+            'accountType'   => 'ECOM',
         );
     }
 
@@ -30,5 +31,6 @@ abstract class AbstractRequestTest extends TestCase
         $this->assertSame('test-site-reference', (string)$data->request->operation->sitereference);
         $this->assertSame('test-1234', (string)$data->request->merchant->orderreference);
         $this->assertSame('test-password', $this->request->getPassword());
+        $this->assertSame('ECOM', $this->request->getAccountType());
     }
 }
