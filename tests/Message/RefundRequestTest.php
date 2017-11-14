@@ -35,7 +35,7 @@ class RefundRequestTest extends AbstractRequestTest
     {
         $data = $this->request->getData();
 
-        $this->assertSame('REFUND', (string)$data->getElementsByTagName('request')->item(0)->getAttributes('type'));
+        $this->assertSame('REFUND', (string)$data->getElementsByTagName('request')->item(0)->getAttribute('type'));
     }
 
     public function testTransactionData()
