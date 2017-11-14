@@ -29,7 +29,7 @@ class ThreeDSecureRequest extends AbstractPurchaseRequest
         $this->validate('returnUrl');
 
         /** @var DOMDocument $request */
-        $request = $data->getElementsByTagName('request');
+        $request = $data->getElementsByTagName('request')->item(0);
         /** @var DOMDocument $merchant */
         $merchant = $data->getElementsByTagName('merchant')->item(0);
         $merchant->appendChild($data->createElement('termurl', $this->getReturnUrl()));
