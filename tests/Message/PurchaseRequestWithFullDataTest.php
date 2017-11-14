@@ -46,16 +46,16 @@ class PurchaseRequestWithFullDataTest extends PurchaseRequestTest
 
         $billing = $data->getElementsByTagName('billing')->item(0);
 
-        $this->assertSame($card->getBillingFirstName(), (string)$billing->getElementsByTagName('name')->item(0)->getElementsByTagName('first')->item(0)->textContent);
-        $this->assertSame($card->getBillingLastName(), (string)$billing->getElementsByTagName('name')->item(0)->getElementsByTagName('last')->item(0)->textContent);
-        $this->assertSame($card->getBillingPhone(), (string)$billing->getElementsByTagName('telephone')->item(0)->textContent);
-        $this->assertSame($card->getBillingCountry(), (string)$billing->getElementsByTagName('country')->item(0)->textContent);
-        $this->assertSame($card->getBillingCity(), (string)$billing->getElementsByTagName('town')->item(0)->textContent);
-        $this->assertSame($card->getBillingState(), (string)$billing->getElementsByTagName('county')->item(0)->textContent);
-        $this->assertSame($card->getBillingPostcode(), (string)$billing->getElementsByTagName('postcode')->item(0)->textContent);
+        $this->assertSame($card->getBillingFirstName(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('name')->item(0)->getElementsByTagName('first')->item(0)->textContent);
+        $this->assertSame($card->getBillingLastName(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('name')->item(0)->getElementsByTagName('last')->item(0)->textContent);
+        $this->assertSame($card->getBillingPhone(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('telephone')->item(0)->textContent);
+        $this->assertSame($card->getBillingCountry(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('country')->item(0)->textContent);
+        $this->assertSame($card->getBillingCity(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('town')->item(0)->textContent);
+        $this->assertSame($card->getBillingState(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('county')->item(0)->textContent);
+        $this->assertSame($card->getBillingPostcode(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('postcode')->item(0)->textContent);
         $this->assertSame(
             $card->getBillingAddress1() . ', ' . $card->getBillingAddress2(),
-            (string)$billing->getElementsByTagName('street')->item(0)->textContent
+            (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('street')->item(0)->textContent
         );
         $this->assertSame($card->getEmail(), (string)$billing->getElementsByTagName('email')->item(0)->textContent);
     }

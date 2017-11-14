@@ -40,11 +40,10 @@ class RefundRequestTest extends AbstractRequestTest
 
     public function testTransactionData()
     {
-        $request = $this->request->getData()->getElementsByTagName('request')->item(0);
-        $merchant = $request->getElementsByTagName('merchant')->item(0);
+        $request = $this->request->getData();
 
         $this->assertSame('1200', (string)$request->getElementsByTagName('billing')->item(0)->getElementsByTagName('amount')->item(0)->textContent);
         $this->assertSame('test-transaction-reference', (string)$request->getElementsByTagName('operation')->item(0)->getElementsByTagName('parenttransactionreference')->item(0)->textContent);
-        $this->assertSame('jane@test.local', (string)$merchant->getElementsByTagName('email')->item(0)->textContent);
+        $this->assertSame('jane@test.local', (string)$request->getElementsByTagName('merchant')->item(0)->getElementsByTagName('email')->item(0)->textContent);
     }
 }

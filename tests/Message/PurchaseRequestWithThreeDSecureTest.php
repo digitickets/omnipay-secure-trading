@@ -32,11 +32,8 @@ class PurchaseRequestWithThreeDSecureTest extends PurchaseRequestTest
     {
         $data = $this->request->getData();
 
-        $merchant = $data->getElementsByTagName('merchant')->item(0);
-        $customer = $data->getElementsByTagName('customer')->item(0);
-
-        $this->assertSame('http://dummy-return-url.local', (string)$merchant->getElementsByTagName('termurl')->item(0)->textContent);
-        $this->assertSame('*/*', (string)$customer->getElementsByTagName('accept')->item(0)->textContent);
-        $this->assertSame('test-user-agent', (string)$customer->getElementsByTagName('useragent')->item(0)->textContent);
+        $this->assertSame('http://dummy-return-url.local', (string)$data->getElementsByTagName('merchant')->item(0)->getElementsByTagName('termurl')->item(0)->textContent);
+        $this->assertSame('*/*', (string)$data->getElementsByTagName('customer')->item(0)->getElementsByTagName('accept')->item(0)->textContent);
+        $this->assertSame('test-user-agent', (string)$data->getElementsByTagName('customer')->item(0)->getElementsByTagName('useragent')->item(0)->textContent);
     }
 }
