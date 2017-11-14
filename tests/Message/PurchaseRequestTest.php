@@ -38,7 +38,7 @@ class PurchaseRequestTest extends AbstractRequestTest
     {
         $data = $this->request->getData();
 
-        $this->assertSame('AUTH', (string)$data->getElementsByTagName('request')->item(0)->getAttribute('type'));
+        $this->assertSame('AUTH', (string)$data->getElementsByTagName('request')->item(0)->getAttributes('type'));
         $this->assertSame('ECOM', (string)$data->getElementsByTagName('request')->item(0)->getElementsByTagName('operation')->item(0)->getElementsByTagName('accounttypedescription')->item(0)->textContent);
     }
 
