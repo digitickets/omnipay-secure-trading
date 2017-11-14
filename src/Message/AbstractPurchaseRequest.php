@@ -4,7 +4,6 @@ namespace Omnipay\SecureTrading\Message;
 
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Common\Exception\InvalidRequestException;
-use SimpleXMLElement;
 
 /**
  * AbstractPurchase Request
@@ -78,7 +77,7 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @return SimpleXMLElement
+     * @return \DOMDocument
      * @throws InvalidCreditCardException
      * @throws InvalidRequestException
      */
@@ -88,36 +87,39 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
 
         $data = $this->getBaseData();
 
-        /** @var SimpleXmlElement $request */
-        $request = $data->request;
+        /** @var \DOMDocument $request */
+        $request = $data->getElementsByTagName('request')->item(0);
 
-        /** @var SimpleXmlElement $operation */
-        $operation = $request->operation;
-        $operation->addChild('accounttypedescription', $this->getAccountType());
-        $operation->addChild('authmethod', 'FINAL');
+        /** @var \DOMDocument $operation */
+        $operation = $data->getElementsByTagName('operation')->item(0);
+        $operation->appendChild($data->createElement('accounttypedescription', $this->getAccountType()));
+        $operation->appendChild($data->createElement('authmethod', 'FINAL'));
 
-        $billing = $request->addChild('billing');
-        $amount  = $billing->addChild('amount', $this->getAmountInteger());
-        $amount->addAttribute('currencycode', $this->getCurrency());
+        /** @var \DOMDocument $billing */
+        $billing = $request->appendChild($data->createElement('billing'));
+        $amount = $data->createElement('amount', $this->getAmountInteger());
+        $amount->setAttribute('currencycode', $this->getCurrency());
+        $billing->appendChild($amount);
 
         if ($this->getCardReference()) {
-            $operation->addChild('parenttransactionreference', $this->getCardReference());
+            $operation->appendChild($data->createElement('parenttransactionreference', $this->getCardReference()));
         } else {
             $this->validate('card');
             $card = $this->getCard();
             $card->validate();
 
-            $payment = $billing->addChild('payment');
-            $payment->addAttribute('type', strtoupper($card->getBrand()));
+            $payment = $data->createElement('payment');
+            $payment->setAttribute('type', strtoupper($card->getBrand()));
+            $billing->appendChild($payment);
 
-            $payment->addChild('pan', $card->getNumber());
-            $payment->addChild('expirydate', $card->getExpiryDate('m/Y'));
-            $payment->addChild('securitycode', $card->getCvv());
+            $payment->appendChild($data->createElement('pan', $card->getNumber()));
+            $payment->appendChild($data->createElement('expirydate', $card->getExpiryDate('m/Y')));
+            $payment->appendChild($data->createElement('securitycode', $card->getCvv()));
         }
         
-        /** @var SimpleXMLElement $customer */
-        $customer = $data->request->customer ?: $data->request->addChild('customer');
-        $customer->addChild('ip', $this->getClientIp());
+        /** @var \DOMDocument $customer */
+        $customer = $request->getElementsByTagName('customer')->item(0) ?: $request->appendChild($data->createElement('customer'));
+        $customer->appendChild($data->createElement('ip', $this->getClientIp()));
 
         if ($this->getCard()) {
             $this->setBillingCredentials($data);
@@ -128,23 +130,35 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param SimpleXMLElement $data
+     * @param \DOMDocument $data
      */
-    protected function setBillingCredentials(SimpleXMLElement $data)
+    protected function setBillingCredentials(\DOMDocument $data)
     {
         $card = $this->getCard();
 
-        /** @var SimpleXMLElement $billing */
-        $billing = $data->request->billing;
+        /** @var \DOMDocument $billing */
+        $billing = $data->getElementsByTagName('billing')->item(0);
 
-        $name = $billing->addChild('name');
-        $name->addChild('first', $card->getBillingFirstName());
-        $name->addChild('last', $card->getBillingLastName());
+        $name = $billing->appendChild($data->createElement('name'));
+        $name
+            ->appendChild($data->createElement('first'))
+            ->appendChild($data->createTextNode($card->getBillingFirstName()));
+        $name
+            ->appendChild($data->createElement('last'))
+            ->appendChild($data->createTextNode($card->getBillingLastName()));
 
-        $billing->addChild('country', $card->getBillingCountry());
-        $billing->addChild('county', $card->getBillingState());
-        $billing->addChild('town', $card->getBillingCity());
-        $billing->addChild('postcode', $card->getBillingPostcode());
+        $billing
+            ->appendChild($data->createElement('country'))
+            ->appendChild($data->createTextNode($card->getBillingCountry()));
+        $billing
+            ->appendChild($data->createElement('county'))
+            ->appendChild($data->createTextNode($card->getBillingState()));
+        $billing
+            ->appendChild($data->createElement('town'))
+            ->appendChild($data->createTextNode($card->getBillingCity()));
+        $billing
+            ->appendChild($data->createElement('postcode'))
+            ->appendChild($data->createTextNode($card->getBillingPostcode()));
 
         $address = implode(
             ', ',
@@ -153,30 +167,51 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
                 $card->getBillingAddress2(),
             ))
         ) ?: null;
-        $billing->addChild('street', $address);
+        $billing
+            ->appendChild($data->createElement('street'))
+            ->appendChild($data->createTextNode($address));
 
-        $billing->addChild('email', $card->getEmail());
-        $billing->addChild('telephone', $card->getBillingPhone());
+        $billing
+            ->appendChild($data->createElement('email'))
+            ->appendChild($data->createTextNode($card->getEmail()));
+        $billing
+            ->appendChild($data->createElement('telephone'))
+            ->appendChild($data->createTextNode($card->getBillingPhone()));
     }
 
     /**
-     * @param SimpleXMLElement $data
+     * @param \DOMDocument $data
      */
-    protected function setShippingCredentials(SimpleXMLElement $data)
+    protected function setShippingCredentials(\DOMDocument $data)
     {
         $card = $this->getCard();
 
-        /** @var SimpleXMLElement $customer */
-        $customer = $data->request->customer ?: $data->request->addChild('customer');
+        /** @var \DOMDocument $request */
+        $request = $data->getElementsByTagName('request')->item(0);
+        /** @var \DOMDocument $customer */
+        $customer = $data->getElementsByTagName('customer')->item(0) ?: $request->appendChild($data->createElement('customer'));
 
-        $name = $customer->addChild('name');
-        $name->addChild('first', $card->getShippingFirstName());
-        $name->addChild('last', $card->getShippingLastName());
+        /** @var \DOMDocument $name */
+        $name = $customer->appendChild($data->createElement('name'));
+        $name
+            ->appendChild($data->createElement('first'))
+            ->appendChild($data->createTextNode($card->getShippingFirstName()));
+        $name
+            ->appendChild($data->createElement('last'))
+            ->appendChild($data->createTextNode($card->getShippingLastName()));
 
-        $customer->addChild('country', $card->getShippingCountry());
-        $customer->addChild('county', $card->getShippingState());
-        $customer->addChild('town', $card->getShippingCity());
-        $customer->addChild('postcode', $card->getShippingPostcode());
+        $customer
+            ->appendChild($data->createElement('country'))
+            ->appendChild($data->createTextNode($card->getShippingCountry()));
+        $customer
+            ->appendChild($data->createElement('county'))
+            ->appendChild($data->createTextNode($card->getShippingState()));
+        $customer
+            ->appendChild($data->createElement('town'))
+            ->appendChild($data->createTextNode($card->getShippingCity()));
+        $customer
+            ->appendChild($data->createElement('postcode'))
+            ->appendChild($data->createTextNode($card->getShippingPostcode()));
 
         $address = implode(
             ', ',
@@ -185,9 +220,15 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
                 $card->getShippingAddress2(),
             ))
         ) ?: null;
-        $customer->addChild('street', $address);
+        $customer
+            ->appendChild($data->createElement('street'))
+            ->appendChild($data->createTextNode($address));
 
-        $customer->addChild('email', $card->getEmail());
-        $customer->addChild('telephone', $card->getShippingPhone());
+        $customer
+            ->appendChild($data->createElement('email'))
+            ->appendChild($data->createTextNode($card->getEmail()));
+        $customer
+            ->appendChild($data->createElement('telephone'))
+            ->appendChild($data->createTextNode($card->getShippingPhone()));
     }
 }
