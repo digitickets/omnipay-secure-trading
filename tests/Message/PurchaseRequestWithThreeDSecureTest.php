@@ -24,19 +24,19 @@ class PurchaseRequestWithThreeDSecureTest extends PurchaseRequestTest
     {
         $data = $this->request->getData();
 
-        $this->assertSame('THREEDQUERY', (string)$data->request->attributes()->type);
-        $this->assertSame('ECOM', (string)$data->request->operation->accounttypedescription);
+        $this->assertSame('THREEDQUERY', (string)$data->getElementsByTagName('request')->item(0)->getAttributes('type'));
+        $this->assertSame('ECOM', (string)$data->getElementsByTagName('request')->item(0)->getElementsByTagName('operation')->item(0)->getElementsByTagName('accounttypedescription')->item(0)->textContent);
     }
 
     public function testThreeDSecureData()
     {
         $data = $this->request->getData();
 
-        $merchant = $data->request->merchant;
-        $customer = $data->request->customer;
+        $merchant = $data->getElementsByTagName('merchant')->item(0);
+        $customer = $data->getElementsByTagName('customer')->item(0);
 
-        $this->assertSame('http://dummy-return-url.local', (string)$merchant->termurl);
-        $this->assertSame('*/*', (string)$customer->accept);
-        $this->assertSame('test-user-agent', (string)$customer->useragent);
+        $this->assertSame('http://dummy-return-url.local', (string)$merchant->getElementsByTagName('termurl')->item(0)->textContent);
+        $this->assertSame('*/*', (string)$customer->getElementsByTagName('accept')->item(0)->textContent);
+        $this->assertSame('test-user-agent', (string)$customer->getElementsByTagName('useragent')->item(0)->textContent);
     }
 }

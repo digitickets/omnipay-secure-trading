@@ -21,9 +21,9 @@ class PurchaseRequestWithCardReferenceTest extends PurchaseRequestTest
 
     public function testTransactionData()
     {
-        $request = $this->request->getData()->request;
+        $request = $this->request->getData()->getElementsByTagName('request')->item(0);
 
-        $this->assertObjectNotHasAttribute('payment', $request->billing);
-        $this->assertSame('test-card-reference', (string)$request->operation->parenttransactionreference);
+        $this->assertObjectNotHasAttribute('payment', $request->getElementsByTagName('billing')->item(0));
+        $this->assertSame('test-card-reference', (string)$request->getElementsByTagName('operation')->item(0)->getElementsByTagName('parenttransactionreference')->item(0)->textContent);
     }
 }
