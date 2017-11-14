@@ -3,6 +3,7 @@
 namespace Omnipay\SecureTrading\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
+use DOMDocument;
 
 /**
  * Abstract Request
@@ -105,11 +106,11 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
     /**
-     * @return \DOMDocument
+     * @return DOMDocument
      */
     public function getBaseData()
     {
-        $domTree = new \DOMDocument('1.0', 'UTF-8');
+        $domTree = new DOMDocument('1.0', 'UTF-8');
         // root element
         $data = $domTree->createElement('requestblock');
 
@@ -135,7 +136,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
     /**
-     * @param \DOMDocument $data
+     * @param DOMDocument $data
      * @return Response
      */
     public function sendData($data)

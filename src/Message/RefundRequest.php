@@ -2,6 +2,8 @@
 
 namespace Omnipay\SecureTrading\Message;
 
+use DOMDocument;
+
 /**
  * Refund Request
  *
@@ -18,7 +20,7 @@ class RefundRequest extends AbstractRequest
     }
 
     /**
-     * @return \DOMDocument
+     * @return DOMDocument
      */
     public function getData()
     {
@@ -26,10 +28,10 @@ class RefundRequest extends AbstractRequest
 
         $data = $this->getBaseData();
 
-        /** @var \DOMDocument $request */
+        /** @var DOMDocument $request */
         $request = $data->getElementsByTagName('request')->item(0);
 
-        /** @var \DOMDocument $operation */
+        /** @var DOMDocument $operation */
         $operation = $request->getElementsByTagName('operation')->item(0);
         $operation->appendChild($data->createElement('parenttransactionreference', $this->getTransactionReference()));
 
@@ -40,7 +42,7 @@ class RefundRequest extends AbstractRequest
 
         $card = $this->getCard();
         if ($card && $card->getEmail()) {
-            /** @var \DOMDocument $merchant */
+            /** @var DOMDocument $merchant */
             $merchant = $request->getElementsByTagName('merchant')->item(0);
             $merchant->appendChild($data->createElement('email', $card->getEmail()));
         }

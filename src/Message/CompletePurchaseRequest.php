@@ -3,6 +3,7 @@
 namespace Omnipay\SecureTrading\Message;
 
 use Omnipay\Common\Exception\InvalidRequestException;
+use DOMDocument;
 
 /**
  * CompletePurchase Request
@@ -54,7 +55,7 @@ class CompletePurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @return \DOMDocument
+     * @return DOMDocument
      * @throws InvalidRequestException
      */
     public function getData()
@@ -63,10 +64,10 @@ class CompletePurchaseRequest extends AbstractRequest
 
         $data = $this->getBaseData();
 
-        /** @var \DOMDocument $request */
+        /** @var DOMDocument $request */
         $request = $data->getElementsByTagName('request')->item(0);
 
-        /** @var \DOMDocument $operation */
+        /** @var DOMDocument $operation */
         $operation = $request->getElementsByTagName('operation')->item(0);
         $operation->appendChild($data->createElement('accounttypedescription', 'ECOM'));
         $operation->appendChild($data->createElement('authmethod', 'FINAL'));

@@ -4,6 +4,7 @@ namespace Omnipay\SecureTrading\Message;
 
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Common\Exception\InvalidRequestException;
+use DOMDocument;
 
 /**
  * AbstractPurchase Request
@@ -77,7 +78,7 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @return \DOMDocument
+     * @return DOMDocument
      * @throws InvalidCreditCardException
      * @throws InvalidRequestException
      */
@@ -87,15 +88,15 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
 
         $data = $this->getBaseData();
 
-        /** @var \DOMDocument $request */
+        /** @var DOMDocument $request */
         $request = $data->getElementsByTagName('request')->item(0);
 
-        /** @var \DOMDocument $operation */
+        /** @var DOMDocument $operation */
         $operation = $data->getElementsByTagName('operation')->item(0);
         $operation->appendChild($data->createElement('accounttypedescription', $this->getAccountType()));
         $operation->appendChild($data->createElement('authmethod', 'FINAL'));
 
-        /** @var \DOMDocument $billing */
+        /** @var DOMDocument $billing */
         $billing = $request->appendChild($data->createElement('billing'));
         $amount = $data->createElement('amount', $this->getAmountInteger());
         $amount->setAttribute('currencycode', $this->getCurrency());
@@ -117,7 +118,7 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
             $payment->appendChild($data->createElement('securitycode', $card->getCvv()));
         }
         
-        /** @var \DOMDocument $customer */
+        /** @var DOMDocument $customer */
         $customer = $request->getElementsByTagName('customer')->item(0) ?: $request->appendChild($data->createElement('customer'));
         $customer->appendChild($data->createElement('ip', $this->getClientIp()));
 
@@ -130,13 +131,13 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param \DOMDocument $data
+     * @param DOMDocument $data
      */
     protected function setBillingCredentials(\DOMDocument $data)
     {
         $card = $this->getCard();
 
-        /** @var \DOMDocument $billing */
+        /** @var DOMDocument $billing */
         $billing = $data->getElementsByTagName('billing')->item(0);
 
         $name = $billing->appendChild($data->createElement('name'));
@@ -180,18 +181,18 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param \DOMDocument $data
+     * @param DOMDocument $data
      */
     protected function setShippingCredentials(\DOMDocument $data)
     {
         $card = $this->getCard();
 
-        /** @var \DOMDocument $request */
+        /** @var DOMDocument $request */
         $request = $data->getElementsByTagName('request')->item(0);
-        /** @var \DOMDocument $customer */
+        /** @var DOMDocument $customer */
         $customer = $data->getElementsByTagName('customer')->item(0) ?: $request->appendChild($data->createElement('customer'));
 
-        /** @var \DOMDocument $name */
+        /** @var DOMDocument $name */
         $name = $customer->appendChild($data->createElement('name'));
         $name
             ->appendChild($data->createElement('first'))
