@@ -133,7 +133,7 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
     /**
      * @param DOMDocument $data
      */
-    protected function setBillingCredentials(\DOMDocument $data)
+    protected function setBillingCredentials(DOMDocument $data)
     {
         $card = $this->getCard();
 
@@ -183,7 +183,7 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
     /**
      * @param DOMDocument $data
      */
-    protected function setShippingCredentials(\DOMDocument $data)
+    protected function setShippingCredentials(DOMDocument $data)
     {
         $card = $this->getCard();
 
