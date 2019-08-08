@@ -38,19 +38,19 @@ class PurchaseRequestTest extends AbstractRequestTest
     {
         $data = $this->request->getData();
 
-        $this->assertSame('AUTH', (string)$data->request->attributes()->type);
-        $this->assertSame('ECOM', (string)$data->request->operation->accounttypedescription);
+        $this->assertSame('AUTH', (string)$data->getElementsByTagName('request')->item(0)->getAttribute('type'));
+        $this->assertSame('ECOM', (string)$data->getElementsByTagName('request')->item(0)->getElementsByTagName('operation')->item(0)->getElementsByTagName('accounttypedescription')->item(0)->textContent);
     }
 
     public function testTransactionData()
     {
-        $request = $this->request->getData()->request;
+        $request = $this->request->getData();
 
-        $this->assertSame('1200', (string)$request->billing->amount);
-        $this->assertSame('GBP', (string)$request->billing->amount->attributes()->currencycode);
-        $this->assertSame('VISA', (string)$request->billing->payment->attributes()->type);
-        $this->assertSame('4111111111111111', (string)$request->billing->payment->pan);
-        $this->assertSame('12/2020', (string)$request->billing->payment->expirydate);
-        $this->assertSame('123', (string)$request->billing->payment->securitycode);
+        $this->assertSame('1200', (string)$request->getElementsByTagName('billing')->item(0)->getElementsByTagName('amount')->item(0)->textContent);
+        $this->assertSame('GBP', (string)$request->getElementsByTagName('billing')->item(0)->getElementsByTagName('amount')->item(0)->getAttribute('currencycode'));
+        $this->assertSame('VISA', (string)$request->getElementsByTagName('billing')->item(0)->getElementsByTagName('payment')->item(0)->getAttribute('type'));
+        $this->assertSame('4111111111111111', (string)$request->getElementsByTagName('billing')->item(0)->getElementsByTagName('payment')->item(0)->getElementsByTagName('pan')->item(0)->textContent);
+        $this->assertSame('12/2020', (string)$request->getElementsByTagName('billing')->item(0)->getElementsByTagName('payment')->item(0)->getElementsByTagName('expirydate')->item(0)->textContent);
+        $this->assertSame('123', (string)$request->getElementsByTagName('billing')->item(0)->getElementsByTagName('payment')->item(0)->getElementsByTagName('securitycode')->item(0)->textContent);
     }
 }

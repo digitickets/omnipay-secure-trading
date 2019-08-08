@@ -3,7 +3,7 @@
 namespace Omnipay\SecureTrading\Message;
 
 use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
-use SimpleXMLElement;
+use DOMDocument;
 
 /**
  * Abstract Request
@@ -106,29 +106,37 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
     /**
-     * @return SimpleXMLElement
+     * @return DOMDocument
      */
     public function getBaseData()
     {
-        $data = new SimpleXMLElement('<?xml version="1.0"?><requestblock/>');
-        $data->addAttribute('version', '3.67');
+        $domTree = new DOMDocument('1.0', 'UTF-8');
+        // root element
+        $data = $domTree->createElement('requestblock');
 
-        $alias = $data->addChild('alias', $this->getUsername());
+        $data->setAttribute('version', '3.67');
+        $data = $domTree->appendChild($data);
 
-        $request = $data->addChild('request');
-        $request->addAttribute('type', $this->getAction());
+        $alias = $domTree->createElement('alias', $this->getUsername());
+        $data->appendChild($alias);
 
-        $merchant = $request->addChild('merchant');
-        $merchant->addChild('orderreference', $this->getTransactionId());
+        $request = $domTree->createElement('request');
+        $request->setAttribute('type', $this->getAction());
+        $data->appendChild($request);
 
-        $operation = $request->addChild('operation');
-        $operation->addChild('sitereference', $this->getSiteReference());
+        $merchant = $domTree->createElement('merchant');
+        $merchant->appendChild($domTree->createElement('orderreference', $this->getTransactionId()));
+        $request->appendChild($merchant);
 
-        return $data;
+        $operation = $domTree->createElement('operation');
+        $operation->appendChild($domTree->createElement('sitereference', $this->getSiteReference()));
+        $request->appendChild($operation);
+
+        return $domTree;
     }
 
     /**
-     * @param SimpleXMLElement $data
+     * @param DOMDocument $data
      * @return Response
      */
     public function sendData($data)
@@ -137,7 +145,7 @@ abstract class AbstractRequest extends BaseAbstractRequest
             'Content-Type: text/xml;charset=utf-8',
             'Accept: text/xml',
         );
-        $httpRequest = $this->httpClient->post($this->getEndpoint(), $headers, $data->asXML());
+        $httpRequest = $this->httpClient->post($this->getEndpoint(), $headers, $data->saveXML());
         $httpRequest->setAuth($this->getUsername(), $this->getPassword());
         $httpResponse = $httpRequest->send();
 

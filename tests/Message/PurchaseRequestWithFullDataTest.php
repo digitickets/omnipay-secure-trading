@@ -44,20 +44,20 @@ class PurchaseRequestWithFullDataTest extends PurchaseRequestTest
         $data = $this->request->getData();
         $card = $this->request->getCard();
 
-        $billing = $data->request->billing;
+        $billing = $data->getElementsByTagName('billing')->item(0);
 
-        $this->assertSame($card->getBillingFirstName(), (string)$billing->name->first);
-        $this->assertSame($card->getBillingLastName(), (string)$billing->name->last);
-        $this->assertSame($card->getBillingPhone(), (string)$billing->telephone);
-        $this->assertSame($card->getBillingCountry(), (string)$billing->country);
-        $this->assertSame($card->getBillingCity(), (string)$billing->town);
-        $this->assertSame($card->getBillingState(), (string)$billing->county);
-        $this->assertSame($card->getBillingPostcode(), (string)$billing->postcode);
+        $this->assertSame($card->getBillingFirstName(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('name')->item(0)->getElementsByTagName('first')->item(0)->textContent);
+        $this->assertSame($card->getBillingLastName(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('name')->item(0)->getElementsByTagName('last')->item(0)->textContent);
+        $this->assertSame($card->getBillingPhone(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('telephone')->item(0)->textContent);
+        $this->assertSame($card->getBillingCountry(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('country')->item(0)->textContent);
+        $this->assertSame($card->getBillingCity(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('town')->item(0)->textContent);
+        $this->assertSame($card->getBillingState(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('county')->item(0)->textContent);
+        $this->assertSame($card->getBillingPostcode(), (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('postcode')->item(0)->textContent);
         $this->assertSame(
             $card->getBillingAddress1() . ', ' . $card->getBillingAddress2(),
-            (string)$billing->street
+            (string)$data->getElementsByTagName('billing')->item(0)->getElementsByTagName('street')->item(0)->textContent
         );
-        $this->assertSame($card->getEmail(), (string)$billing->email);
+        $this->assertSame($card->getEmail(), (string)$billing->getElementsByTagName('email')->item(0)->textContent);
     }
 
     public function testShippingDetails()
@@ -65,18 +65,18 @@ class PurchaseRequestWithFullDataTest extends PurchaseRequestTest
         $data = $this->request->getData();
         $card = $this->request->getCard();
 
-        $customer = $data->request->customer;
+        $customer = $data->getElementsByTagName('customer')->item(0);
 
-        $this->assertSame($card->getShippingFirstName(), (string)$customer->name->first);
-        $this->assertSame($card->getShippingLastName(), (string)$customer->name->last);
-        $this->assertSame('', (string)$customer->telephone);
-        $this->assertSame($card->getShippingCountry(), (string)$customer->country);
-        $this->assertSame($card->getShippingCity(), (string)$customer->town);
-        $this->assertSame($card->getShippingState(), (string)$customer->county);
-        $this->assertSame($card->getShippingPostcode(), (string)$customer->postcode);
+        $this->assertSame($card->getShippingFirstName(), (string)$customer->getElementsByTagName('name')->item(0)->getElementsByTagName('first')->item(0)->textContent);
+        $this->assertSame($card->getShippingLastName(), (string)$customer->getElementsByTagName('name')->item(0)->getElementsByTagName('last')->item(0)->textContent);
+        $this->assertSame('', (string)$customer->getElementsByTagName('telephone')->item(0)->textContent);
+        $this->assertSame($card->getShippingCountry(), (string)$customer->getElementsByTagName('country')->item(0)->textContent);
+        $this->assertSame($card->getShippingCity(), (string)$customer->getElementsByTagName('town')->item(0)->textContent);
+        $this->assertSame($card->getShippingState(), (string)$customer->getElementsByTagName('county')->item(0)->textContent);
+        $this->assertSame($card->getShippingPostcode(), (string)$customer->getElementsByTagName('postcode')->item(0)->textContent);
         $this->assertSame(
             $card->getShippingAddress1() . ', ' . $card->getShippingAddress2(),
-            (string)$customer->street
+            (string)$customer->getElementsByTagName('street')->item(0)->textContent
         );
     }
 }

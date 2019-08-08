@@ -2,7 +2,7 @@
 
 namespace Omnipay\SecureTrading\Message;
 
-use SimpleXMLElement;
+use DOMDocument;
 
 /**
  * Refund Request
@@ -20,7 +20,7 @@ class RefundRequest extends AbstractRequest
     }
 
     /**
-     * @return SimpleXMLElement
+     * @return DOMDocument
      */
     public function getData()
     {
@@ -28,23 +28,23 @@ class RefundRequest extends AbstractRequest
 
         $data = $this->getBaseData();
 
-        /** @var SimpleXmlElement $request */
-        $request = $data->request;
+        /** @var DOMDocument $request */
+        $request = $data->getElementsByTagName('request')->item(0);
 
-        /** @var SimpleXmlElement $operation */
-        $operation = $request->operation;
-        $operation->addChild('parenttransactionreference', $this->getTransactionReference());
+        /** @var DOMDocument $operation */
+        $operation = $request->getElementsByTagName('operation')->item(0);
+        $operation->appendChild($data->createElement('parenttransactionreference', $this->getTransactionReference()));
 
         if (!is_null($this->getAmount())) {
-            $billing = $request->addChild('billing');
-            $billing->addChild('amount', $this->getAmountInteger());
+            $billing = $request->appendChild($data->createElement('billing'));
+            $billing->appendChild($data->createElement('amount', $this->getAmountInteger()));
         }
 
         $card = $this->getCard();
         if ($card && $card->getEmail()) {
-            /** @var SimpleXmlElement $merchant */
-            $merchant = $request->merchant;
-            $merchant->addChild('email', $card->getEmail());
+            /** @var DOMDocument $merchant */
+            $merchant = $request->getElementsByTagName('merchant')->item(0);
+            $merchant->appendChild($data->createElement('email', $card->getEmail()));
         }
 
         return $data;

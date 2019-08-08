@@ -30,10 +30,10 @@ class CompletePurchaseRequestTest extends PurchaseRequestTest
 
     public function testTransactionData()
     {
-        $request = $this->request->getData()->request;
+        $request = $this->request->getData();
 
         $this->assertObjectNotHasAttribute('billing', $request);
-        $this->assertSame('test-md', (string)$request->operation->md);
-        $this->assertSame('test-pa-res', (string)$request->operation->pares);
+        $this->assertSame('test-md', (string)$request->getElementsByTagName('operation')->item(0)->getElementsByTagName('md')->item(0)->textContent);
+        $this->assertSame('test-pa-res', (string)$request->getElementsByTagName('operation')->item(0)->getElementsByTagName('pares')->item(0)->textContent);
     }
 }

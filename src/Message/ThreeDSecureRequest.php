@@ -2,7 +2,7 @@
 
 namespace Omnipay\SecureTrading\Message;
 
-use SimpleXMLElement;
+use DOMDocument;
 
 /**
  * ThreeDSecure Request
@@ -20,7 +20,7 @@ class ThreeDSecureRequest extends AbstractPurchaseRequest
     }
 
     /**
-     * @return SimpleXMLElement
+     * @return DOMDocument
      */
     public function getData()
     {
@@ -28,14 +28,16 @@ class ThreeDSecureRequest extends AbstractPurchaseRequest
 
         $this->validate('returnUrl');
 
-        /** @var SimpleXMLElement $merchant */
-        $merchant = $data->request->merchant;
-        $merchant->addChild('termurl', $this->getReturnUrl());
+        /** @var DOMDocument $request */
+        $request = $data->getElementsByTagName('request')->item(0);
+        /** @var DOMDocument $merchant */
+        $merchant = $data->getElementsByTagName('merchant')->item(0);
+        $merchant->appendChild($data->createElement('termurl', $this->getReturnUrl()));
 
-        /** @var SimpleXMLElement $customer */
-        $customer = $data->request->customer ?: $data->request->addChild('customer');
-        $customer->addChild('accept', $this->getAccept());
-        $customer->addChild('useragent', $this->getUserAgent());
+        /** @var DOMDocument $customer */
+        $customer = $request->getElementsByTagName('customer')->item(0) ?: $request->appendChild($data->createElement('customer'));
+        $customer->appendChild($data->createElement('accept', $this->getAccept()));
+        $customer->appendChild($data->createElement('useragent', $this->getUserAgent()));
 
         return $data;
     }
