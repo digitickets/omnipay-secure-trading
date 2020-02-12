@@ -2,8 +2,8 @@
 
 namespace Omnipay\SecureTrading\Message;
 
-use Omnipay\Common\Exception\InvalidRequestException;
 use DOMDocument;
+use Omnipay\Common\Exception\InvalidRequestException;
 
 /**
  * CompletePurchase Request
@@ -21,28 +21,12 @@ class CompletePurchaseRequest extends AbstractRequest
     }
 
     /**
-     * return string
-     */
-    public function getMd()
-    {
-        return $this->getParameter('md');
-    }
-
-    /**
      * @param string $value
      * @return $this
      */
     public function setMd($value)
     {
         return $this->setParameter('md', $value);
-    }
-
-    /**
-     * return string
-     */
-    public function getPaRes()
-    {
-        return $this->getParameter('paRes');
     }
 
     /**
@@ -76,5 +60,21 @@ class CompletePurchaseRequest extends AbstractRequest
         $operation->appendChild($data->createElement('pares', $this->getPaRes()));
 
         return $data;
+    }
+
+    /**
+     * return string
+     */
+    public function getMd()
+    {
+        return $this->getParameter('md');
+    }
+
+    /**
+     * return string
+     */
+    public function getPaRes()
+    {
+        return $this->getParameter('paRes');
     }
 }

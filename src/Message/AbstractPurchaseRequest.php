@@ -2,9 +2,9 @@
 
 namespace Omnipay\SecureTrading\Message;
 
+use DOMDocument;
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Common\Exception\InvalidRequestException;
-use DOMDocument;
 
 /**
  * AbstractPurchase Request
@@ -27,15 +27,6 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
-     * @return $this
-     */
-    public function setAccept($value)
-    {
-        return $this->setParameter('accept', $value);
-    }
-
-    /**
      * @return string
      */
     protected function determineAccept()
@@ -43,6 +34,15 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
         return isset($_SERVER) && array_key_exists('HTTP_ACCEPT', $_SERVER)
             ? $_SERVER['HTTP_ACCEPT']
             : '';
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setAccept($value)
+    {
+        return $this->setParameter('accept', $value);
     }
 
     /**
@@ -59,15 +59,6 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
     }
 
     /**
-     * @param string $value
-     * @return $this
-     */
-    public function setUserAgent($value)
-    {
-        return $this->setParameter('userAgent', $value);
-    }
-
-    /**
      * @return string
      */
     protected function determineUserAgent()
@@ -75,6 +66,15 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
         return isset($_SERVER) && array_key_exists('HTTP_USER_AGENT', $_SERVER)
             ? $_SERVER['HTTP_USER_AGENT']
             : '';
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setUserAgent($value)
+    {
+        return $this->setParameter('userAgent', $value);
     }
 
     /**
@@ -117,7 +117,7 @@ abstract class AbstractPurchaseRequest extends AbstractRequest
             $payment->appendChild($data->createElement('expirydate', $card->getExpiryDate('m/Y')));
             $payment->appendChild($data->createElement('securitycode', $card->getCvv()));
         }
-        
+
         /** @var DOMDocument $customer */
         $customer = $request->getElementsByTagName('customer')->item(0) ?: $request->appendChild($data->createElement('customer'));
         $customer->appendChild($data->createElement('ip', $this->getClientIp()));

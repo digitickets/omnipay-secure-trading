@@ -2,6 +2,7 @@
 
 namespace Omnipay\SecureTrading\Message;
 
+use DOMDocument;
 use Omnipay\Common\Message\RedirectResponseInterface;
 
 /**
@@ -20,12 +21,11 @@ class ThreeDSecureResponse extends Response implements RedirectResponseInterface
     }
 
     /**
-     * @return null|string
+     * @return bool
      */
-    public function getEnrolled()
+    public function isRedirect()
     {
-        return isset($this->data->response->threedsecure->enrolled)
-            ? (string)$this->data->response->threedsecure->enrolled : null;
+        return parent::isSuccessful() && $this->isEnrolled();
     }
 
     /**
@@ -39,10 +39,10 @@ class ThreeDSecureResponse extends Response implements RedirectResponseInterface
     /**
      * @return null|string
      */
-    public function getMd()
+    public function getEnrolled()
     {
-        return isset($this->data->response->threedsecure->md)
-            ? (string)$this->data->response->threedsecure->md : null;
+
+        return isset($this->xml->getElementsByTagName('enrolled')[0]) ? (string)$this->xml->getElementsByTagName('enrolled')[0]->nodeValue : null;
     }
 
     /**
@@ -50,25 +50,7 @@ class ThreeDSecureResponse extends Response implements RedirectResponseInterface
      */
     public function getXid()
     {
-        return isset($this->data->response->threedsecure->xid)
-            ? (string)$this->data->response->threedsecure->xid : null;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getPaReq()
-    {
-        return isset($this->data->response->threedsecure->pareq)
-            ? (string)$this->data->response->threedsecure->pareq : null;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isRedirect()
-    {
-        return parent::isSuccessful() && $this->isEnrolled();
+        return isset($this->xml->getElementsByTagName('xid')[0]) ? (string)$this->xml->getElementsByTagName('xid')[0]->nodeValue : null;
     }
 
     /**
@@ -76,8 +58,7 @@ class ThreeDSecureResponse extends Response implements RedirectResponseInterface
      */
     public function getRedirectUrl()
     {
-        return isset($this->data->response->threedsecure->acsurl)
-            ? (string)$this->data->response->threedsecure->acsurl : null;
+        return isset($this->xml->getElementsByTagName('acsurl')[0]) ? (string)$this->xml->getElementsByTagName('acsurl')[0]->nodeValue : null;
     }
 
     /**
@@ -98,9 +79,25 @@ class ThreeDSecureResponse extends Response implements RedirectResponseInterface
         }
 
         return array(
-            'PaReq'   => $this->getPaReq(),
+            'PaReq' => $this->getPaReq(),
             'TermUrl' => $this->getRequest()->getReturnUrl(),
-            'MD'      => $this->getMd(),
+            'MD' => $this->getMd(),
         );
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPaReq()
+    {
+        return isset($this->xml->getElementsByTagName('pareq')[0]) ? (string)$this->xml->getElementsByTagName('pareq')[0]->nodeValue : null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getMd()
+    {
+        return isset($this->xml->getElementsByTagName('md')[0]) ? (string)$this->xml->getElementsByTagName('md')[0]->nodeValue : null;
     }
 }

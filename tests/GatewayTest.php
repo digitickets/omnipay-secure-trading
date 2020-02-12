@@ -188,7 +188,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame(0, $response->getSettleStatus());
         $this->assertSame('2015-09-25', $response->getSettleDueDate());
 
-        $this->assertSame('7-9-1796834', (string)$response->getData()->response->operation->parenttransactionreference);
+        $this->assertSame('7-9-1796834', (string)$response->getParentTransactionReference());
     }
 
     public function testCompletePurchaseSuccess()
@@ -209,11 +209,11 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame(0, $response->getSettleStatus());
         $this->assertSame('2015-09-24', $response->getSettleDueDate());
 
-        $this->assertSame('Q0FWVkNBVlZDQVZWQ0FWVkNBVlY=', (string)$response->getData()->response->threedsecure->cavv);
-        $this->assertSame('Y', (string)$response->getData()->response->threedsecure->status);
-        $this->assertSame('dHFncHQ1WUltcGhKS1NCUmFGUUo=', (string)$response->getData()->response->threedsecure->xid);
-        $this->assertSame('05', (string)$response->getData()->response->threedsecure->eci);
-        $this->assertSame('Y', (string)$response->getData()->response->threedsecure->enrolled);
+        $this->assertSame('Q0FWVkNBVlZDQVZWQ0FWVkNBVlY=', (string)$response->getCAVV());
+        $this->assertSame('Y', $response->getThreedStatus());
+        $this->assertSame('dHFncHQ1WUltcGhKS1NCUmFGUUo=', (string)$response->getXid());
+        $this->assertSame('05', (string)$response->getThreedEci());
+        $this->assertSame('Y', (string)$response->getThreedEnrolledStatus());
     }
 
     public function testCompletePurchaseFailure()
@@ -234,8 +234,8 @@ class GatewayTest extends GatewayTestCase
         $this->assertSame(3, $response->getSettleStatus());
         $this->assertSame('2015-09-24', $response->getSettleDueDate());
 
-        $this->assertSame('N', (string)$response->getData()->response->threedsecure->status);
-        $this->assertSame('Y', (string)$response->getData()->response->threedsecure->enrolled);
+        $this->assertSame('N', (string)$response->getThreedStatus());
+        $this->assertSame('Y', (string)$response->getThreedEnrolledStatus());
     }
 
     public function testRefundSuccess()
