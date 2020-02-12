@@ -2,13 +2,25 @@
 
 namespace Omnipay\SecureTrading\Message;
 
+use DOMDocument;
 use Omnipay\Common\Message\AbstractResponse;
+use Omnipay\Common\Message\RequestInterface;
 
 /**
  * Response
  */
 class Response extends AbstractResponse
 {
+    protected $xml;
+
+    public function __construct(RequestInterface $request, $data)
+    {
+        parent::__construct($request, $data);
+        $xmlDocument = new DOMDocument();
+        $xmlDocument->loadXml($this->data);
+        $this->xml = $xmlDocument;
+    }
+
     /**
      * @return bool
      */
@@ -18,19 +30,27 @@ class Response extends AbstractResponse
     }
 
     /**
-     * @return null|string
+     * @return null|int
      */
-    public function getMessage()
+    public function getCode()
     {
-        return isset($this->data->response->error->message) ? (string)$this->data->response->error->message : null;
+        return isset($this->xml->getElementsByTagName('code')[0]) ? (int)$this->xml->getElementsByTagName('code')[0]->nodeValue : null;
     }
 
     /**
      * @return null|int
      */
-    public function getCode()
+    public function getSettleStatus()
     {
-        return isset($this->data->response->error->code) ? (int)$this->data->response->error->code : null;
+        return isset($this->xml->getElementsByTagName('settlestatus')[0]) ? (int)$this->xml->getElementsByTagName('settlestatus')[0]->nodeValue : null;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getMessage()
+    {
+        return isset($this->xml->getElementsByTagName('message')[0]) ? (string)$this->xml->getElementsByTagName('message')[0]->nodeValue : null;
     }
 
     /**
@@ -38,7 +58,10 @@ class Response extends AbstractResponse
      */
     public function getErrorData()
     {
-        return isset($this->data->response->error->data) ? (string)$this->data->response->error->data : null;
+        if (isset($this->xml->getElementsByTagName('data')[0]) && $this->xml->getElementsByTagName('message')[0]->nodeValue != 'OK')
+            return (string)$this->xml->getElementsByTagName('data')[0]->nodeValue;
+
+        return null;
     }
 
     /**
@@ -52,27 +75,17 @@ class Response extends AbstractResponse
     /**
      * @return null|string
      */
-    public function getTransactionReference()
-    {
-        return isset($this->data->response->transactionreference)
-            ? (string)$this->data->response->transactionreference : null;
-    }
-
-    /**
-     * @return null|string
-     */
     public function getCardReference()
     {
         return $this->getTransactionReference();
     }
 
     /**
-     * @return null|int
+     * @return null|string
      */
-    public function getSettleStatus()
+    public function getTransactionReference()
     {
-        return isset($this->data->response->settlement->settlestatus)
-            ? (int)$this->data->response->settlement->settlestatus : null;
+        return isset($this->xml->getElementsByTagName('transactionreference')[0]) ? (string)$this->xml->getElementsByTagName('transactionreference')[0]->nodeValue : null;
     }
 
     /**
@@ -80,7 +93,36 @@ class Response extends AbstractResponse
      */
     public function getSettleDueDate()
     {
-        return isset($this->data->response->settlement->settleduedate)
-            ? (string)$this->data->response->settlement->settleduedate : null;
+        return isset($this->xml->getElementsByTagName('settleduedate')[0]) ? (string)$this->xml->getElementsByTagName('settleduedate')[0]->nodeValue : null;
+    }
+
+    public function getParentTransactionReference()
+    {
+        return isset($this->xml->getElementsByTagName('parenttransactionreference')[0]) ? (string)$this->xml->getElementsByTagName('parenttransactionreference')[0]->nodeValue : null;
+    }
+
+    public function getThreedStatus()
+    {
+        return isset($this->xml->getElementsByTagName('status')[0]) ? (string)$this->xml->getElementsByTagName('status')[0]->nodeValue : null;
+    }
+
+    public function getThreedEci()
+    {
+        return isset($this->xml->getElementsByTagName('eci')[0]) ? (string)$this->xml->getElementsByTagName('eci')[0]->nodeValue : null;
+    }
+
+    public function getThreedEnrolledStatus()
+    {
+        return isset($this->xml->getElementsByTagName('enrolled')[0]) ? (string)$this->xml->getElementsByTagName('enrolled')[0]->nodeValue : null;
+    }
+
+    public function getXid()
+    {
+        return isset($this->xml->getElementsByTagName('xid')[0]) ? (string)$this->xml->getElementsByTagName('xid')[0]->nodeValue : null;
+    }
+
+    public function getCAVV()
+    {
+        return isset($this->xml->getElementsByTagName('cavv')[0]) ? (string)$this->xml->getElementsByTagName('cavv')[0]->nodeValue : null;
     }
 }

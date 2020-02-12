@@ -21,6 +21,7 @@ class RefundRequest extends AbstractRequest
 
     /**
      * @return DOMDocument
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function getData()
     {

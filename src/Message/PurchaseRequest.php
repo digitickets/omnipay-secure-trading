@@ -18,6 +18,8 @@ class PurchaseRequest extends AbstractPurchaseRequest
 
     /**
      * @return DOMDocument
+     * @throws \Omnipay\Common\Exception\InvalidCreditCardException
+     * @throws \Omnipay\Common\Exception\InvalidRequestException
      */
     public function getData()
     {

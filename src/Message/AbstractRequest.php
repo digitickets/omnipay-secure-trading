@@ -2,8 +2,8 @@
 
 namespace Omnipay\SecureTrading\Message;
 
-use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 use DOMDocument;
+use Omnipay\Common\Message\AbstractRequest as BaseAbstractRequest;
 
 /**
  * Abstract Request
@@ -16,19 +16,6 @@ abstract class AbstractRequest extends BaseAbstractRequest
     protected $endpoint = 'https://webservices.securetrading.net:443/xml/';
 
     /**
-     * @return string
-     */
-    abstract public function getAction();
-
-    /**
-     * @return string
-     */
-    public function getSiteReference()
-    {
-        return $this->getParameter('siteReference');
-    }
-
-    /**
      * @param string $value
      * @return $this
      */
@@ -38,28 +25,12 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
     /**
-     * @return string
-     */
-    public function getUsername()
-    {
-        return $this->getParameter('username');
-    }
-
-    /**
      * @param string $value
      * @return $this
      */
     public function setUsername($value)
     {
         return $this->setParameter('username', $value);
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->getParameter('password');
     }
 
     /**
@@ -136,20 +107,47 @@ abstract class AbstractRequest extends BaseAbstractRequest
     }
 
     /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->getParameter('username');
+    }
+
+    /**
+     * @return string
+     */
+    abstract public function getAction();
+
+    /**
+     * @return string
+     */
+    public function getSiteReference()
+    {
+        return $this->getParameter('siteReference');
+    }
+
+    /**
      * @param DOMDocument $data
      * @return Response
      */
     public function sendData($data)
     {
-        $headers     = array(
+        $headers = array(
             'Content-Type: text/xml;charset=utf-8',
             'Accept: text/xml',
+            'Authorization: ' . base64_encode($this->getUsername() . ':' . $this->getPassword()),
         );
-        $httpRequest = $this->httpClient->post($this->getEndpoint(), $headers, $data->saveXML());
-        $httpRequest->setAuth($this->getUsername(), $this->getPassword());
-        $httpResponse = $httpRequest->send();
+        $response = $this->httpClient->request('POST', $this->getEndpoint(), $headers, $data->saveXML())->getBody()->getContents();
+        return $this->createResponse($response);
+    }
 
-        return $this->createResponse($httpResponse->xml());
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->getParameter('password');
     }
 
     /**
