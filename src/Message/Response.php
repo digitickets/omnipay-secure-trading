@@ -16,7 +16,9 @@ class Response extends AbstractResponse
     public function __construct(RequestInterface $request, $data)
     {
         parent::__construct($request, $data);
-        $this->xml = DOMDocument::loadXML($this->data);
+        $xmlDocument = new DOMDocument();
+        $xmlDocument->loadXml($this->data);
+        $this->xml = $xmlDocument;
     }
 
     /**
